@@ -1,4 +1,4 @@
-import 'package:busi/views/home_view.dart';
+import 'package:busi/views/page_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,11 +14,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeView(),
+      home: HomeView(),
     );
   }
 }
