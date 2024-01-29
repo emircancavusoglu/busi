@@ -11,14 +11,16 @@ class _HomeViewState extends State<HomeView> {
   PageController _pageController = PageController(initialPage: 0);
   int _activePage = 0;
   final List<Widget> _pages = [
-    PageOne(),
-    PageTwo(),
-    PageThree()
+    const PageOne(),
+    const PageTwo(),
+    const PageThree()
   ];
+  @override
   void initState(){
     super.initState();
     _pageController = PageController(initialPage: 0);
   }
+  @override
   void dispose (){
     _pageController.dispose();
     super.dispose();
@@ -115,7 +117,7 @@ class PageThree extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.red,
+      color: Colors.purple,
       child: const Column(mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text("Introduce of BusiCount"),

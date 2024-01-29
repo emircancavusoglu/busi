@@ -38,6 +38,10 @@ dependencies:
   #core
   easy_localization: ^3.0.3
   riverpod: ^2.4.9
+  #auth
+  google_sign_in: ^6.2.1
+  firebase_auth: ^4.16.0
+  firebase_core: ^2.24.2
 
 dev_dependencies:
   flutter_test:
