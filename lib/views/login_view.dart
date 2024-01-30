@@ -11,7 +11,7 @@ class LoginView extends StatelessWidget {
         backgroundColor: Colors.green,
         title: Text('Welcome To BusiCount $username'),
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

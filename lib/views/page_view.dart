@@ -1,3 +1,4 @@
+import 'package:busi/views/login_view.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -105,24 +106,48 @@ class PageTwo extends StatelessWidget{
       color: Colors.blue,
       child: const Column(mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("Introduce of BusiCount"),
+        Text('Introduce of BusiCount'),
       ],
       ),
     );
   }
 }
-class PageThree extends StatelessWidget{
-  const PageThree({super.key});
+class PageThree extends StatelessWidget {
+  const PageThree({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.purple,
-      child: const Column(mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text("Introduce of BusiCount"),
-      ],
+      child: Stack(
+        children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Introduce of BusiCount'),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 60,
+            right: 10,
+            child: SizedBox(
+              width: 100,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)
+                  => LoginView(),),);
+                },
+                child: const Icon(Icons.forward),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
+
+
+
