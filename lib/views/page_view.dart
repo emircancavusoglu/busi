@@ -121,11 +121,11 @@ class PageThree extends StatelessWidget {
       color: Colors.purple,
       child: Stack(
         children: [
-          Center(
+          const Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Introduce of BusiCount'),
+                Text('Introduce of BusiCount'),
               ],
             ),
           ),

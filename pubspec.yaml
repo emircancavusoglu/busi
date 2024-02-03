@@ -43,6 +43,10 @@ dependencies:
   firebase_auth: ^4.16.0
   firebase_core: ^2.24.2
 
+  #network:
+  dio: ^5.4.0
+  html: ^0.15.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -68,6 +72,7 @@ flutter:
 
   assets:
     - assets/busi-logo-white.png
+    - assets/google.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
