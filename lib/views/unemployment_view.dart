@@ -3,6 +3,8 @@ import 'package:busi/network/unemployment_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import '../widget/bottom_navigation_bar.dart';
+
 class MainPageView extends StatefulWidget {
   const MainPageView({Key? key}) : super(key: key);
 
@@ -53,6 +55,7 @@ class _MainPageViewState extends State<MainPageView> {
 
         );
       },),
+      bottomNavigationBar: const BottomNavigation(),
     );
   }
 }
