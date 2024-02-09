@@ -1,5 +1,5 @@
 import 'package:busi/consts/signIn.dart';
-import 'package:busi/views/unemployment_view.dart';
+import 'package:busi/views/main_page_view.dart';
 import 'package:flutter/material.dart';
 
 import '../auth/google_sign_in.dart';

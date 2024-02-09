@@ -1,3 +1,8 @@
+import 'package:busi/network/unemployment_model.dart';
+import 'package:busi/views/analysis_view.dart';
+import 'package:busi/views/main_page_view.dart';
+import 'package:busi/views/sector_view.dart';
+import 'package:busi/views/settings_view.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -8,12 +13,17 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-
-  var _selectedIndex = 0;
+  final tabs = [
+    MainPageView(),
+    AnalysisView(),
+    SectorView(),
+    SettingsView(),
+  ];
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: _selectedIndex,
+      currentIndex: selectedIndex,
       type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
       BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Ana Sayfa',),
@@ -26,7 +36,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   }
   void _onTapped(int index){
     setState(() {
-      _selectedIndex = index;
+      selectedIndex = index;
     });
      }
 }
