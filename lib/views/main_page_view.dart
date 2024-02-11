@@ -52,6 +52,10 @@ class _MainPageViewState extends State<MainPageView> {
         return ListTile(
           title: Text(_items?[index].tarih ?? ''),
           subtitle: Text('İşsizlik Verisi : ${_items?[index].tPTIG08}'),
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2a670899243d6ab2131cc183b6c4ad4e2067507e
         );
       },),
       bottomNavigationBar: const BottomNavigation(),
