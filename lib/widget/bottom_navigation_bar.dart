@@ -4,6 +4,7 @@ import 'package:busi/views/main_page_view.dart';
 import 'package:busi/views/sector_view.dart';
 import 'package:busi/views/settings_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({Key? key}) : super(key: key);
@@ -22,21 +23,28 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: selectedIndex,
-      type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-      BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Ana Sayfa',),
-      BottomNavigationBarItem(icon: Icon(Icons.analytics_outlined),label: 'Analiz Yap'),
-      BottomNavigationBarItem(icon: Icon(Icons.format_list_numbered),label: 'Sektör '),
-      BottomNavigationBarItem(icon: Icon(Icons.settings),label: 'Ayarlar'),
-        ],
-    onTap: _onTapped
+    return Consumer<SelectedIndexProvider>(
+      builder: (context, selectedIndex, _) => BottomNavigationBar(
+          currentIndex: selectedIndex.selectedIndex,
+          type: BottomNavigationBarType.fixed,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Ana Sayfa',),
+            BottomNavigationBarItem(icon: Icon(Icons.analytics_outlined),label: 'Analiz Yap'),
+            BottomNavigationBarItem(icon: Icon(Icons.format_list_numbered),label: 'Sektör '),
+            BottomNavigationBarItem(icon: Icon(Icons.settings),label: 'Ayarlar'),
+          ],
+      onTap: (value) => selectedIndex.selectedIndex = value,
+      ),
     );
   }
-  void _onTapped(int index){
-    setState(() {
-      selectedIndex = index;
-    });
-     }
+}
+
+class SelectedIndexProvider extends ChangeNotifier{
+  int _selectedIndex = 0;
+  int get selectedIndex => _selectedIndex;
+
+  set selectedIndex(int value){
+    _selectedIndex = value;
+    notifyListeners();
+  }
 }
