@@ -46,9 +46,11 @@ class _MainPageViewState extends State<MainPageView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [IconButton(onPressed: (){
+        actions: [
+          IconButton(onPressed: (){
           Navigator.of(context).push(MaterialPageRoute(builder: (context) => FavoritesView(),));
-        },icon: Icon(Icons.favorite_border_outlined),)]
+        },icon: const Icon(Icons.favorite_border_outlined),),
+        ],
       ),
       body: ListView.builder(
         itemCount: _items?.length ?? 0,

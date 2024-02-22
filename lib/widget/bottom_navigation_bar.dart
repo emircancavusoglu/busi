@@ -20,18 +20,33 @@ class _BottomNavigationState extends State<BottomNavigation> {
     SectorView(),
     SettingsView(),
   ];
-  int selectedIndex = 0;
+  int myIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Consumer<SelectedIndexProvider>(
       builder: (context, selectedIndex, _) => BottomNavigationBar(
           currentIndex: selectedIndex.selectedIndex,
           type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Ana Sayfa',),
-            BottomNavigationBarItem(icon: Icon(Icons.analytics_outlined),label: 'Analiz Yap'),
-            BottomNavigationBarItem(icon: Icon(Icons.format_list_numbered),label: 'Sektör '),
-            BottomNavigationBarItem(icon: Icon(Icons.settings),label: 'Ayarlar'),
+          items:  <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: IconButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => MainPageView(),)
+              );}, icon: const Icon(Icons.home)),label: 'Ana Sayfa'),
+
+            BottomNavigationBarItem(
+                icon: IconButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => AnalysisView(),)
+              );
+              },icon: const Icon(Icons.analytics_outlined)),label: 'Analiz Yap'),
+
+            BottomNavigationBarItem(icon: IconButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => AnalysisView(),)
+              );
+              },icon: const Icon(Icons.format_list_numbered)),label: 'Sektör'),
+
+            BottomNavigationBarItem(icon: IconButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => AnalysisView(),)
+              );
+              },icon: const Icon(Icons.settings)),label: 'Ayarlar'),
           ],
       onTap: (value) => selectedIndex.selectedIndex = value,
       ),
