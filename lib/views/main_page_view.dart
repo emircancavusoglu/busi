@@ -1,5 +1,6 @@
 import 'package:busi/network/network_source.dart';
 import 'package:busi/network/unemployment_model.dart';
+import 'package:busi/views/favorites_view.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -40,12 +41,15 @@ class _MainPageViewState extends State<MainPageView> {
     }
     _changeLoading();
   }
-
   List<UnemploymentModel>? _items;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [IconButton(onPressed: (){
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => FavoritesView(),));
+        },icon: Icon(Icons.favorite_border_outlined),)]
+      ),
       body: ListView.builder(
         itemCount: _items?.length ?? 0,
         itemBuilder: (context, index) {
