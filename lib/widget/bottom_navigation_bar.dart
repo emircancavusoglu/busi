@@ -1,4 +1,3 @@
-import 'package:busi/network/unemployment_model.dart';
 import 'package:busi/views/analysis_view.dart';
 import 'package:busi/views/main_page_view.dart';
 import 'package:busi/views/sector_view.dart';
@@ -7,14 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BottomNavigation extends StatefulWidget {
-  const BottomNavigation({Key? key}) : super(key: key);
+  const BottomNavigation({super.key});
 
   @override
   State<BottomNavigation> createState() => _BottomNavigationState();
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  final tabs = [
+  final tabs = const[
     MainPageView(),
     AnalysisView(),
     SectorView(),
@@ -29,30 +28,28 @@ class _BottomNavigationState extends State<BottomNavigation> {
           type: BottomNavigationBarType.fixed,
           items:  <BottomNavigationBarItem>[
             BottomNavigationBarItem(icon: IconButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MainPageView(),)
-              );}, icon: const Icon(Icons.home)),label: 'Ana Sayfa'),
+              NavigateToWidget.navigateToScreen(context, const MainPageView());
+            }, icon: const Icon(Icons.home),),label: 'Ana Sayfa',),
 
             BottomNavigationBarItem(
                 icon: IconButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => AnalysisView(),)
-              );
-              },icon: const Icon(Icons.analytics_outlined)),label: 'Analiz Yap'),
+                  NavigateToWidget.navigateToScreen(context, const AnalysisView());
+                },icon: const Icon(Icons.analytics_outlined)),label: 'Analiz Yap'),
 
             BottomNavigationBarItem(icon: IconButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => AnalysisView(),)
-              );
-              },icon: const Icon(Icons.format_list_numbered)),label: 'Sektör'),
+              NavigateToWidget.navigateToScreen(context, const SectorView());
+            },icon: const Icon(Icons.format_list_numbered)),label: 'Sektör'),
 
             BottomNavigationBarItem(icon: IconButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => AnalysisView(),)
-              );
-              },icon: const Icon(Icons.settings)),label: 'Ayarlar'),
+              NavigateToWidget.navigateToScreen(context, const SettingsView());
+            },icon: const Icon(Icons.settings)),label: 'Ayarlar'),
           ],
       onTap: (value) => selectedIndex.selectedIndex = value,
       ),
     );
   }
-}
+  }
+
 
 class SelectedIndexProvider extends ChangeNotifier{
   int _selectedIndex = 0;
@@ -61,5 +58,12 @@ class SelectedIndexProvider extends ChangeNotifier{
   set selectedIndex(int value){
     _selectedIndex = value;
     notifyListeners();
+  }
+}
+
+class NavigateToWidget{
+  static void navigateToScreen(BuildContext context, Widget page)
+  {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => page,));
   }
 }
