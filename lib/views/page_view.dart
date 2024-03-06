@@ -87,13 +87,8 @@ class PageOne extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.green,
-      child: const Column(mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text("Introduce of BusiCount"),
-      ],
-      ),
+    return SizedBox(
+        child: Image.asset('assets/introduction.png',fit: BoxFit.scaleDown,),
     );
   }
 }
@@ -102,13 +97,8 @@ class PageTwo extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      child: const Column(mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('Introduce of BusiCount'),
-      ],
-      ),
+    return SizedBox(
+      child: Image.asset('assets/introduction-1.png',fit: BoxFit.scaleDown,),
     );
   }
 }
@@ -118,16 +108,11 @@ class PageThree extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.purple,
       child: Stack(
         children: [
-          const Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Introduce of BusiCount'),
-              ],
-            ),
+          Center(
+            child:
+                Image.asset('assets/introduction-2.png',fit: BoxFit.scaleDown,),
           ),
           Positioned(
             bottom: 60,

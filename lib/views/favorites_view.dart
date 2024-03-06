@@ -12,7 +12,7 @@ class FavoritesView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-              child: Text("Henüz favorilerinize veri eklemediniz."))
+              child: Text('Henüz favorilerinize veri eklemediniz.'))
         ],
       ),
     );

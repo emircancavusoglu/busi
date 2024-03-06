@@ -1,7 +1,7 @@
 import 'package:busi/consts/signIn.dart';
 import 'package:busi/views/main_page_view.dart';
 import 'package:flutter/material.dart';
-
+import 'package:busi/widget/bottom_navigation_bar.dart';
 import '../auth/google_sign_in.dart';
 
 class LoginView extends StatelessWidget {
@@ -51,8 +51,9 @@ class LoginView extends StatelessWidget {
                   fontSize: 18,
                 ),
               ),
-            ElevatedButton(onPressed: (){Navigator.push(context, MaterialPageRoute(
-              builder: (context) =>  MainPageView(),),);}, child: const Text("geçici buton"))
+            ElevatedButton(onPressed: (){
+              NavigateToWidget.navigateToScreen(context, const MainPageView());
+            },child: const Text("geçici buton"))
             ],
           ),
         ),
