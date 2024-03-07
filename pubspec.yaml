@@ -43,7 +43,11 @@ dependencies:
   google_sign_in: ^6.2.1
   firebase_auth: ^4.16.0
   firebase_core: ^2.24.2
+  #excel
+  excel: ^4.0.2
 
+  #file_picker
+  file_picker: ^6.2.0
   #network:
   dio: ^5.4.0
 
