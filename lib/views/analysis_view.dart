@@ -51,9 +51,11 @@ class AnalysisView extends StatefulWidget {
 }
 
 class _AnalysisViewState extends State<AnalysisView> {
-  getMultipleFile() async {
+  Future<void> getMultipleFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
+      type: FileType.custom,
+      allowedExtensions: ['xlsx']
     );
     if (result != null) {
       List<File?> file = result.paths.map((path) => File(path!)).toList();
@@ -76,12 +78,27 @@ class _AnalysisViewState extends State<AnalysisView> {
       ),
       body: Column(
         children: [
-          // Ensure Text size with SizedBox
-          SizedBox(
-            width: double.infinity, // Expand to fill available space
-            child: Text(
-              "Seçilen Dosyalar",
-              style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          Padding(
+            padding: const EdgeInsets.only(top: 100),
+            child: Row(
+              children: [
+                   ElevatedButton(onPressed: (){}, child: Text("Geçmiş Analizlerim")),
+                   const SizedBox(width: 30,),
+                   ElevatedButton(onPressed: getMultipleFile, child: const Text("Excel'den Aktar")),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: files.isNotEmpty,
+            child: const SizedBox(
+              width: double.infinity,
+              child: Padding(
+                padding: EdgeInsets.only(top: 30, left: 10),
+                child: Text(
+                  "Seçilen Dosyalar",
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 10.0), // Add some spacing
@@ -98,11 +115,6 @@ class _AnalysisViewState extends State<AnalysisView> {
             ),
           ),
         ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: getMultipleFile,
-        label: const Text("Dosya Seç"),
       ),
     );
   }
