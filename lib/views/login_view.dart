@@ -13,7 +13,7 @@ class LoginView extends StatelessWidget {
     final signInSize = MediaQuery.of(context).size.width * 0.2;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.white70,
         title: Text('Welcome To BusiCount $username'),
       ),
       body: Center(
