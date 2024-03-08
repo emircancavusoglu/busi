@@ -1,3 +1,4 @@
+import 'package:busi/views/analysis_types.dart';
 import 'package:busi/views/analysis_view.dart';
 import 'package:busi/views/main_page_view.dart';
 import 'package:busi/views/sector_view.dart';
@@ -33,7 +34,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
             BottomNavigationBarItem(
                 icon: IconButton(onPressed: (){
-                  NavigateToWidget.navigateToScreen(context, const AnalysisView());
+                  NavigateToWidget.navigateToScreen(context, const AnalysisTypes());
                 },icon: const Icon(Icons.analytics_outlined)),label: 'Analiz Yap'),
 
             BottomNavigationBarItem(icon: IconButton(onPressed: (){
