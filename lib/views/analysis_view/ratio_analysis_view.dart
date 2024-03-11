@@ -34,10 +34,11 @@ class _RatioAnalysisViewState extends State<RatioAnalysisView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Analiz"),
+        title: const Text("Oran Analizi"),
       ),
       body: Column(
         children: [
+          Text("Lütfen Bilanço tablonuzu Yükleyiniz (5 yıllık yüklemeniz tercih edilmektedir)"),
           Padding(
             padding: const EdgeInsets.only(top: 100),
             child: Row(

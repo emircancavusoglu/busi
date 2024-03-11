@@ -2,7 +2,14 @@
 // add description of analysis feature to card
 
 import 'package:busi/views/analysis_view.dart';
-import 'package:busi/views/sector_view.dart';
+import 'package:busi/views/analysis_view/du_pont_analysis_view.dart';
+import 'package:busi/views/analysis_view/horizontal_analysis_view.dart';
+import 'package:busi/views/analysis_view/profitable_analysis_view.dart';
+import 'package:busi/views/analysis_view/ratio_analysis_view.dart';
+import 'package:busi/views/analysis_view/risk_analysis_view.dart';
+import 'package:busi/views/analysis_view/sector_analysis_view.dart';
+import 'package:busi/views/analysis_view/trend_analysis_view.dart';
+import 'package:busi/views/analysis_view/vertical_analysis.dart';
 import 'package:busi/widget/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +23,7 @@ class AnalysisTypes extends StatelessWidget {
         title: const Text('Analiz Türleri'),
       ),
       body: GridView.count(
-        crossAxisCount: 2, // Ekran genişliğine bağlı olarak 2 sütunlu bir grid
+        crossAxisCount: 2,
         children: [
           analysisCard(context, "Sektör Analizi", "Oranlarınızı sektörünüzdeki rakiplerinizle karşılaştırın", Colors.blue),
           analysisCard(context, "Du Pont Analizi", "Finansal performansınızı etkileyen faktörleri inceleyin", Colors.green),
@@ -24,7 +31,7 @@ class AnalysisTypes extends StatelessWidget {
           analysisCard(context, "Dikey Analiz", "Firma içindeki farklı seviyeler arasındaki ilişkileri inceleyin", Colors.purple),
           analysisCard(context, "Yatay Analiz", "Firma dönemleri arasındaki değişimleri karşılaştırın", Colors.red),
           analysisCard(context, "Oran Analizi", "Firma performansını ölçmek için oranları kullanın", Colors.teal),
-          analysisCard(context, "Risk Analizi", "Firma için olası riskleri değerlendirin", Colors.amber),
+          analysisCard(context, "Risk Analizi", "Firmanız için olası riskleri makine öğrenmesi teknikleri ile değerlendirin", Colors.amber),
           analysisCard(context, "Karlılık Analizi", "Firma karlılığını analiz edin", Colors.deepOrange),
           analysisCard(context, "Genel Analizi", "Firmanızın ihtiyaçlarını tespit edin", Colors.blue),
           analysisCard(context, "Pazar Analizi", "Firmanıza özelleştirilmiş rakip ve pazar analizi yapın", Colors.green),
@@ -34,21 +41,46 @@ class AnalysisTypes extends StatelessWidget {
   }
 
   Widget analysisCard(BuildContext context, String title, String description, Color color) {
-    Widget destinationScreen;
+    late Widget destinationScreen;
 
     switch(title){
       case 'Sektör Analizi':
-        destinationScreen = SectorView();
+        destinationScreen = SectorAnalysisView();
+        break;
+      case 'Du Pont Analizi':
+        destinationScreen = DuPontAnalysisView();
+        break;
+      case 'Trend Analizi':
+        destinationScreen = TrendAnalysisView();
+        break;
+      case 'Dikey Analiz':
+        destinationScreen = VerticalAnalysisView();
+        break;
+      case 'Yatay Analiz':
+        destinationScreen = HorizontalAnalysisView();
+        break;
+      case 'Oran Analizi':
+        destinationScreen = RatioAnalysisView();
+        break;
+      case 'Risk Analizi':
+        destinationScreen = RiskAnalysisView();
+        break;
+      case 'Karlılık Analizi':
+        destinationScreen = ProfitableAnalysisView();
+        break;
+      default:
+        destinationScreen = AnalysisView();
     }
-    return Card(
+
+  return Card(
       color: color,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: InkWell(
         onTap: () {
-          NavigateToWidget.navigateToScreen(context, AnalysisView());
-        },
+          NavigateToWidget.navigateToScreen(context, destinationScreen);
+          },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -68,7 +100,7 @@ class AnalysisTypes extends StatelessWidget {
                 color: Colors.white,
               ),
               onPressed: () {
-                NavigateToWidget.navigateToScreen(context, AnalysisView());
+                NavigateToWidget.navigateToScreen(context, destinationScreen);
               },
             ),
             Padding(

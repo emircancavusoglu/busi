@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
-class AnalysisView extends StatefulWidget {
-  AnalysisView({super.key});
+class HorizontalAnalysisView extends StatefulWidget {
+  HorizontalAnalysisView({super.key});
 
   @override
-  State<AnalysisView> createState() => _AnalysisViewState();
+  State<HorizontalAnalysisView> createState() => _HorizontalAnalysisViewState();
 }
 
-class _AnalysisViewState extends State<AnalysisView> {
+class _HorizontalAnalysisViewState extends State<HorizontalAnalysisView> {
   Future<void> getMultipleFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
         allowMultiple: true,

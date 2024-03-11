@@ -35,11 +35,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
             BottomNavigationBarItem(
                 icon: IconButton(onPressed: (){
                   NavigateToWidget.navigateToScreen(context, const AnalysisTypes());
-                },icon: const Icon(Icons.analytics_outlined)),label: 'Analiz Yap'),
+                },icon: const Icon(Icons.analytics_outlined)),label: 'Finansal Analiz'),
 
             BottomNavigationBarItem(icon: IconButton(onPressed: (){
               NavigateToWidget.navigateToScreen(context, const SectorView());
-            },icon: const Icon(Icons.format_list_numbered)),label: 'Sektör'),
+            },icon: const Icon(Icons.format_list_numbered)),label: 'Satış Analizi'),
 
             BottomNavigationBarItem(icon: IconButton(onPressed: (){
               NavigateToWidget.navigateToScreen(context, const SettingsView());
