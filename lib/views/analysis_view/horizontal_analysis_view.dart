@@ -13,9 +13,9 @@ class AnalysisView extends StatefulWidget {
 class _AnalysisViewState extends State<AnalysisView> {
   Future<void> getMultipleFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
-      type: FileType.custom,
-      allowedExtensions: ['xlsx']
+        allowMultiple: true,
+        type: FileType.custom,
+        allowedExtensions: ['xlsx']
     );
     if (result != null) {
       List<File?> file = result.paths.map((path) => File(path!)).toList();
@@ -42,9 +42,9 @@ class _AnalysisViewState extends State<AnalysisView> {
             padding: const EdgeInsets.only(top: 100),
             child: Row(
               children: [
-                   ElevatedButton(onPressed: (){}, child: Text("Geçmiş Analizlerim")),
-                   const SizedBox(width: 30,),
-                   ElevatedButton(onPressed: getMultipleFile, child: const Text("Excel'den Aktar")),
+                ElevatedButton(onPressed: (){}, child: Text("Geçmiş Analizlerim")),
+                const SizedBox(width: 30,),
+                ElevatedButton(onPressed: getMultipleFile, child: const Text("Excel'den Aktar")),
               ],
             ),
           ),

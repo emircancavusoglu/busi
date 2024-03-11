@@ -14,11 +14,11 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  final tabs = const[
-    MainPageView(),
+  final tabs = [
+    const MainPageView(),
     AnalysisView(),
-    SectorView(),
-    SettingsView(),
+    const SectorView(),
+    const SettingsView(),
   ];
   int myIndex = 0;
   @override

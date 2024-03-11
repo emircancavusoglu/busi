@@ -2,6 +2,7 @@
 // add description of analysis feature to card
 
 import 'package:busi/views/analysis_view.dart';
+import 'package:busi/views/sector_view.dart';
 import 'package:busi/widget/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -33,6 +34,12 @@ class AnalysisTypes extends StatelessWidget {
   }
 
   Widget analysisCard(BuildContext context, String title, String description, Color color) {
+    Widget destinationScreen;
+
+    switch(title){
+      case 'Sektör Analizi':
+        destinationScreen = SectorView();
+    }
     return Card(
       color: color,
       shape: RoundedRectangleBorder(
@@ -83,19 +90,19 @@ class AnalysisTypes extends StatelessWidget {
 
   IconData _getIconData(String title) {
     switch (title) {
-      case "Sektör Analizi":
+      case 'Sektör Analizi':
         return Icons.ssid_chart_outlined;
-      case "Du Pont Analizi":
+      case 'Du Pont Analizi':
         return Icons.bar_chart_outlined;
-      case "Trend Analizi":
+      case 'Trend Analizi':
         return Icons.trending_up_outlined;
-      case "Dikey Analiz":
+      case 'Dikey Analiz':
         return Icons.vertical_align_center_outlined;
-      case "Yatay Analiz":
+      case 'Yatay Analiz':
         return Icons.horizontal_split_outlined;
-      case "Oran Analizi":
+      case 'Oran Analizi':
         return Icons.calculate_outlined;
-      case "Risk Analizi":
+      case 'Risk Analizi':
         return Icons.warning_outlined;
       case "Karlılık Analizi":
         return Icons.attach_money_outlined;
