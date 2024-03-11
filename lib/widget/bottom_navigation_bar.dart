@@ -1,7 +1,7 @@
 import 'package:busi/views/analysis_types.dart';
 import 'package:busi/views/analysis_view.dart';
 import 'package:busi/views/main_page_view.dart';
-import 'package:busi/views/sector_view.dart';
+import 'package:busi/views/sales_view.dart';
 import 'package:busi/views/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +17,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   final tabs = [
     const MainPageView(),
     AnalysisView(),
-    const SectorView(),
+    const SalesView(),
     const SettingsView(),
   ];
   int myIndex = 0;
@@ -38,7 +38,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 },icon: const Icon(Icons.analytics_outlined)),label: 'Finansal Analiz'),
 
             BottomNavigationBarItem(icon: IconButton(onPressed: (){
-              NavigateToWidget.navigateToScreen(context, const SectorView());
+              NavigateToWidget.navigateToScreen(context, const SalesView());
             },icon: const Icon(Icons.format_list_numbered)),label: 'Satış Analizi'),
 
             BottomNavigationBarItem(icon: IconButton(onPressed: (){
