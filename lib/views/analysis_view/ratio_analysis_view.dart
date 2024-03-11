@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:busi/consts/getMultipleFile.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -9,27 +9,24 @@ class RatioAnalysisView extends StatefulWidget {
   @override
   State<RatioAnalysisView> createState() => _RatioAnalysisViewState();
 }
-
 class _RatioAnalysisViewState extends State<RatioAnalysisView> {
-  Future<void> getMultipleFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-        allowMultiple: true,
-        type: FileType.custom,
-        allowedExtensions: ['xlsx']
-    );
-    if (result != null) {
-      List<File?> file = result.paths.map((path) => File(path!)).toList();
-      files = file;
-      setState(() {});
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Please select atleast 1 file'),
-      ),);
-    }
-  }
-
+  // Future<void> getMultipleFile() async {
+  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
+  //       allowMultiple: true,
+  //       type: FileType.custom,
+  //       allowedExtensions: ['xlsx']
+  //   );
+  //   if (result != null) {
+  //     List<File?> file = result.paths.map((path) => File(path!)).toList();
+  //     files = file;
+  //     setState(() {});
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+  //       content: Text('Please select at least 1 file'),
+  //     ),);
+  //   }
+  // }
   List<File?> files = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,14 +35,32 @@ class _RatioAnalysisViewState extends State<RatioAnalysisView> {
       ),
       body: Column(
         children: [
-          Text("Lütfen Bilanço tablonuzu Yükleyiniz (5 yıllık yüklemeniz tercih edilmektedir)"),
+          const Padding(
+            padding: EdgeInsets.only(top: 20, left:10),
+            child: Text('Lütfen bilanço tablonuzu yükleyiniz.', style: TextStyle(color: Colors.black, )),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 10, left: 10),
+            child: Text('(Görüntü işleme haricindeki verilerinizi excel formatında yükleyiniz.)'),
+          ),
           Padding(
-            padding: const EdgeInsets.only(top: 100),
+            padding: const EdgeInsets.only(top: 80,left: 20),
             child: Row(
               children: [
                 ElevatedButton(onPressed: (){}, child: Text("Geçmiş Analizlerim")),
                 const SizedBox(width: 30,),
-                ElevatedButton(onPressed: getMultipleFile, child: const Text("Excel'den Aktar")),
+                ElevatedButton(onPressed: () async{
+                  try{
+                    final selectedFiles = await getMultipleFile();
+                    setState(() {
+                      files = selectedFiles;
+                    });
+                  }
+                  catch (e){
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content:
+                    Text('Lütfen en az 1 dosya seçiniz')));
+                  }
+                  }, child: Text("Excel'den Aktar")),
               ],
             ),
           ),
@@ -61,8 +76,7 @@ class _RatioAnalysisViewState extends State<RatioAnalysisView> {
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 10.0), // Add some spacing
+          ), // Add some spacing
           Expanded(
             child: ListView.builder(
               itemCount: files.length,
@@ -74,6 +88,12 @@ class _RatioAnalysisViewState extends State<RatioAnalysisView> {
               },
             ),
           ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 250),
+          child: Visibility(
+              visible: files.isNotEmpty,
+              child: ElevatedButton(onPressed: (){}, child: Text("Onayla"))),
+        )
         ],
       ),
     );

@@ -11,7 +11,7 @@ class _SalesViewState extends State<SalesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Satış Verileri Analizi"),),
+      appBar: AppBar(title: const Text("Satış Verileri Analizi"),),
     );
   }
 }
