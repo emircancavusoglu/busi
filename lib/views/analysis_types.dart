@@ -119,7 +119,6 @@ class AnalysisTypes extends StatelessWidget {
     );
   }
 
-
   IconData _getIconData(String title) {
     switch (title) {
       case 'Sektör Analizi':

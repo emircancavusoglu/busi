@@ -14,42 +14,53 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  final tabs = [
+  final List<Widget> _tabs = [
     const MainPageView(),
     AnalysisView(),
     const SalesView(),
     const SettingsView(),
   ];
-  int myIndex = 0;
+
+  int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<SelectedIndexProvider>(
-      builder: (context, selectedIndex, _) => BottomNavigationBar(
-          currentIndex: selectedIndex.selectedIndex,
-          type: BottomNavigationBarType.fixed,
-          items:  <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: IconButton(onPressed: (){
-              NavigateToWidget.navigateToScreen(context, const MainPageView());
-            }, icon: const Icon(Icons.home),),label: 'Ana Sayfa',),
-
-            BottomNavigationBarItem(
-                icon: IconButton(onPressed: (){
-                  NavigateToWidget.navigateToScreen(context, const AnalysisTypes());
-                },icon: const Icon(Icons.analytics_outlined)),label: 'Finansal Analiz'),
-
-            BottomNavigationBarItem(icon: IconButton(onPressed: (){
-              NavigateToWidget.navigateToScreen(context, const SalesView());
-            },icon: const Icon(Icons.format_list_numbered)),label: 'Satış Analizi'),
-
-            BottomNavigationBarItem(icon: IconButton(onPressed: (){
-              NavigateToWidget.navigateToScreen(context, const SettingsView());
-            },icon: const Icon(Icons.settings)),label: 'Ayarlar'),
-          ],
-      onTap: (value) => selectedIndex.selectedIndex = value,
+    return Scaffold(
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _tabs,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        type: BottomNavigationBarType.fixed,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Ana Sayfa',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.analytics_outlined),
+            label: 'Finansal Analiz',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.format_list_numbered),
+            label: 'Satış Analizi',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Ayarlar',
+          ),
+        ],
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
       ),
     );
   }
-  }
+}
+
 
 
 class SelectedIndexProvider extends ChangeNotifier{
