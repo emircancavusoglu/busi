@@ -13,6 +13,8 @@ import 'package:busi/views/analysis_view/vertical_analysis.dart';
 import 'package:busi/widget/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
+import '../consts/navigator.dart';
+
 class AnalysisTypes extends StatelessWidget {
   const AnalysisTypes({Key? key}) : super(key: key);
 

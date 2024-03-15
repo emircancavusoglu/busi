@@ -1,3 +1,4 @@
+
 import 'package:busi/views/analysis_types.dart';
 import 'package:busi/views/analysis_view.dart';
 import 'package:busi/views/main_page_view.dart';
@@ -5,6 +6,8 @@ import 'package:busi/views/sales_view.dart';
 import 'package:busi/views/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../consts/navigator.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
@@ -14,53 +17,42 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  final List<Widget> _tabs = [
+  final tabs = [
     const MainPageView(),
     AnalysisView(),
-    const SalesView(),
-    const SettingsView(),
+    SalesView(),
+    SettingsView(),
   ];
-
-  int _selectedIndex = 0;
-
+  int myIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _tabs,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
+    return Consumer<SelectedIndexProvider>(
+      builder: (context, selectedIndex, _) => BottomNavigationBar(
+        currentIndex: selectedIndex.selectedIndex,
         type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
+        items:  <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: IconButton(onPressed: (){
+            NavigateToWidget.navigateToScreen(context, const MainPageView());
+          }, icon: const Icon(Icons.home),),label: 'Ana Sayfa',),
+
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Ana Sayfa',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.analytics_outlined),
-            label: 'Finansal Analiz',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.format_list_numbered),
-            label: 'Satış Analizi',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Ayarlar',
-          ),
+              icon: IconButton(onPressed: (){
+                NavigateToWidget.navigateToScreen(context, const AnalysisTypes());
+              },icon: const Icon(Icons.analytics_outlined)),label: 'Analiz Yap'),
+
+          BottomNavigationBarItem(icon: IconButton(onPressed: (){
+            NavigateToWidget.navigateToScreen(context, const SalesView());
+          },icon: const Icon(Icons.format_list_numbered)),label: 'Sektör'),
+
+          BottomNavigationBarItem(icon: IconButton(onPressed: (){
+            NavigateToWidget.navigateToScreen(context, const SettingsView());
+          },icon: const Icon(Icons.settings)),label: 'Ayarlar'),
         ],
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onTap: (value) => selectedIndex.selectedIndex = value,
       ),
     );
   }
 }
-
 
 
 class SelectedIndexProvider extends ChangeNotifier{
@@ -70,12 +62,5 @@ class SelectedIndexProvider extends ChangeNotifier{
   set selectedIndex(int value){
     _selectedIndex = value;
     notifyListeners();
-  }
-}
-
-class NavigateToWidget{
-  static void navigateToScreen(BuildContext context, Widget page)
-  {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => page,));
   }
 }
