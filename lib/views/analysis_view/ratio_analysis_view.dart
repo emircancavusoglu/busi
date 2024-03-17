@@ -1,8 +1,12 @@
 import 'dart:io';
 import 'package:busi/consts/getMultipleFile.dart';
 import 'package:busi/widget/bottom_navigation_bar.dart';
+import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show ByteData, rootBundle;
+
+
 
 class RatioAnalysisView extends StatefulWidget {
   RatioAnalysisView({super.key});
@@ -11,6 +15,28 @@ class RatioAnalysisView extends StatefulWidget {
   State<RatioAnalysisView> createState() => _RatioAnalysisViewState();
 }
 class _RatioAnalysisViewState extends State<RatioAnalysisView> {
+
+  Future<void> readExcelFileFromUser() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['xlsx']);
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      var bytes = await file.bytes;
+      var excel = Excel.decodeBytes(bytes! as List<int>);
+
+      for (var table in excel.tables.keys) {
+        print(table); //sheet Name
+        print(excel.tables[table]?.maxColumns);
+        print(excel.tables[table]?.maxRows);
+        for (var row in excel.tables[table]!.rows) {
+          print('$row');
+        }
+      }
+    } else {
+      // Kullanıcı dosya seçmedi
+      print('Dosya seçilmedi.');
+    }
+  }
+
   // Future<void> getMultipleFile() async {
   //   FilePickerResult? result = await FilePicker.platform.pickFiles(
   //       allowMultiple: true,
@@ -48,7 +74,7 @@ class _RatioAnalysisViewState extends State<RatioAnalysisView> {
             padding: const EdgeInsets.only(top: 80,left: 20),
             child: Row(
               children: [
-                ElevatedButton(onPressed: (){}, child: Text("Geçmiş Analizlerim")),
+                ElevatedButton(onPressed: (){}, child: const Text("Geçmiş Analizlerim")),
                 const SizedBox(width: 30,),
                 ElevatedButton(onPressed: () async{
                   try{
@@ -72,7 +98,7 @@ class _RatioAnalysisViewState extends State<RatioAnalysisView> {
               child: Padding(
                 padding: EdgeInsets.only(top: 30, left: 10),
                 child: Text(
-                  "Seçilen Dosyalar",
+                  'Seçilen Dosyalar',
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -100,3 +126,4 @@ class _RatioAnalysisViewState extends State<RatioAnalysisView> {
     );
   }
 }
+
