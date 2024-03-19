@@ -25,6 +25,7 @@ dependencies:
   google_sign_in: ^6.2.1
   firebase_auth: ^4.16.0
   firebase_core: ^2.24.2
+  firebase_storage: ^11.6.10
   #excel
   excel: ^4.0.2
 
