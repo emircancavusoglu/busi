@@ -1,6 +1,4 @@
-//sector, du pont, trend, dikey, yatay, oran analizi, risk analizi
-// add description of analysis feature to card
-
+import 'package:busi/consts/navigator.dart';
 import 'package:busi/views/analysis_view.dart';
 import 'package:busi/views/analysis_view/du_pont_analysis_view.dart';
 import 'package:busi/views/analysis_view/horizontal_analysis_view.dart';
@@ -10,10 +8,7 @@ import 'package:busi/views/analysis_view/risk_analysis_view.dart';
 import 'package:busi/views/analysis_view/sector_analysis_view.dart';
 import 'package:busi/views/analysis_view/trend_analysis_view.dart';
 import 'package:busi/views/analysis_view/vertical_analysis.dart';
-import 'package:busi/widget/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-
-import '../consts/navigator.dart';
 
 class AnalysisTypes extends StatelessWidget {
   const AnalysisTypes({Key? key}) : super(key: key);
@@ -34,7 +29,7 @@ class AnalysisTypes extends StatelessWidget {
           analysisCard(context, "Yatay Analiz", "Firma dönemleri arasındaki değişimleri karşılaştırın", Colors.red),
           analysisCard(context, "Oran Analizi", "Firma performansını ölçmek için oranları kullanın", Colors.teal),
           analysisCard(context, "Risk Analizi", "Firmanız için olası riskleri makine öğrenmesi teknikleri ile değerlendirin", Colors.amber),
-          analysisCard(context, "Karlılık Analizi", "Firma karlılığını analiz edin", Colors.deepOrange),
+          analysisCard(context, 'Karlılık Analizi', "Firma karlılığını analiz edin", Colors.deepOrange),
           analysisCard(context, "Genel Analizi", "Firmanızın ihtiyaçlarını tespit edin", Colors.blue),
           analysisCard(context, "Pazar Analizi", "Firmanıza özelleştirilmiş rakip ve pazar analizi yapın", Colors.green),
         ],

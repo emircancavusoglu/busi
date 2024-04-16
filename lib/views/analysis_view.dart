@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +14,7 @@ class _AnalysisViewState extends State<AnalysisView> {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
       type: FileType.custom,
-      allowedExtensions: ['xlsx']
+      allowedExtensions: ['xlsx'],
     );
     if (result != null) {
       List<File?> file = result.paths.map((path) => File(path!)).toList();
@@ -23,18 +22,16 @@ class _AnalysisViewState extends State<AnalysisView> {
       setState(() {});
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Please select atleast 1 file'),
+        content: Text('Please select at least 1 file'),
       ),);
     }
   }
-
   List<File?> files = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Analiz"),
+        title: const Text('Analiz'),
       ),
       body: Column(
         children: [
@@ -42,7 +39,7 @@ class _AnalysisViewState extends State<AnalysisView> {
             padding: const EdgeInsets.only(top: 100),
             child: Row(
               children: [
-                   ElevatedButton(onPressed: (){}, child: Text("Geçmiş Analizlerim")),
+                   ElevatedButton(onPressed: (){}, child: const Text('Geçmiş Analizlerim')),
                    const SizedBox(width: 30,),
                    ElevatedButton(onPressed: getMultipleFile, child: const Text("Excel'den Aktar")),
               ],
@@ -55,7 +52,7 @@ class _AnalysisViewState extends State<AnalysisView> {
               child: Padding(
                 padding: EdgeInsets.only(top: 30, left: 10),
                 child: Text(
-                  "Seçilen Dosyalar",
+                  'Seçilen Dosyalar',
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -67,7 +64,7 @@ class _AnalysisViewState extends State<AnalysisView> {
               itemCount: files.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                  title: Text(files[index]!.path.split("/").last,
+                  title: Text(files[index]!.path.split('/').last,
                       style: const TextStyle(color: Colors.black)),
                 );
               },
@@ -77,4 +74,4 @@ class _AnalysisViewState extends State<AnalysisView> {
       ),
     );
   }
-}
+ }

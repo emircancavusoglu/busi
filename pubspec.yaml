@@ -28,7 +28,6 @@ dependencies:
   firebase_storage: ^11.6.10
   #excel
   excel: ^4.0.2
-
   #file_picker
   file_picker: ^6.2.0
   #network:

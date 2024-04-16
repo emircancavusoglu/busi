@@ -5,7 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 class RatioAnalysisView extends StatefulWidget {
-  RatioAnalysisView({Key? key}) : super(key: key);
+  const RatioAnalysisView({super.key});
 
   @override
   State<RatioAnalysisView> createState() => _RatioAnalysisViewState();
@@ -14,25 +14,59 @@ class RatioAnalysisView extends StatefulWidget {
 class _RatioAnalysisViewState extends State<RatioAnalysisView> {
   List<File?> files = [];
 
-  Future<void> readExcelFileFromUser() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['xlsx']);
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      var bytes = await file.bytes;
-      var excel = Excel.decodeBytes(bytes! as List<int>);
+  Future<void> readExcelFile(File file) async {
+    final bytes = await file.readAsBytes();
+    final excel = Excel.decodeBytes(bytes);
 
-      for (var table in excel.tables.keys) {
-        print(table); //sheet Name
-        print(excel.tables[table]?.maxColumns);
-        print(excel.tables[table]?.maxRows);
-        for (var row in excel.tables[table]!.rows) {
-          print('$row');
-        }
-      }
-    } else {
-      // Kullanıcı dosya seçmedi
-      print('Dosya seçilmedi.');
-    }
+    final allData = <List<dynamic>>[];
+
+    // Tüm sayfalardaki veri hücrelerini al
+    excel.tables.forEach((sheetName, table) {
+      table!.rows.forEach((row) {
+        allData.add(row.map((cell) => cell?.value).toList());
+      });
+    });
+
+    // Verileri tablo halinde ekrana bas
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Bilanço Verileriniz'),
+          content: SingleChildScrollView(
+            child: DataTable(
+              columns: List.generate(
+                allData.isNotEmpty ? allData[0].length : 0,
+                    (index) => DataColumn(label: Text('Satır Adı ${index + 1}')),
+              ),
+              rows: List.generate(
+                allData.length - 1, // İlk satır başlık olduğu için -1
+                    (index) => DataRow(
+                  cells: List.generate(
+                    allData[index + 1].length, // İlk satır başlık olduğu için +1
+                        (cellIndex) => DataCell(Text('${allData[index + 1][cellIndex]}')),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Devam Et'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Kapat'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> validateFiles() async {
@@ -41,15 +75,13 @@ class _RatioAnalysisViewState extends State<RatioAnalysisView> {
       if (message != null) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("Dosya ${files[i]!.path.split("/").last} bir bilanço tablosu içermiyor: $message"),
-        ),);
+        ));
         return; // Dosya geçerli değilse, işlemi sonlandır
+      } else {
+        // Dosya geçerliyse, içeriği ekrana bas
+        await readExcelFile(files[i]!);
       }
     }
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('Tüm dosyalar bilanço tablosu içeriyor. Onaylandı!'),
-    ),);
-    //onaylandıysa ne olacak ?
-
   }
 
   Future<String?> checkBalanceSheet(File file) async {
@@ -57,23 +89,7 @@ class _RatioAnalysisViewState extends State<RatioAnalysisView> {
       final bytes = await file.readAsBytes();
       final excel = Excel.decodeBytes(bytes);
 
-      const targetSheetName = 'Bilanço Tablosu';
-
-      if (!excel.tables.keys.contains(targetSheetName)) {
-        return 'Bilanço tablosu içeren sayfa bulunamadı';
-      }
-      final table = excel.tables[targetSheetName]!;
-      if (table.rows.isEmpty) {
-        return "Bilanço tablosu boş";
-      }
-
-      final expectedHeaders = <String>['Varlıklar', 'Kısa Vadeli Yükümlülükler', 'Uzun Vadeli Yükümlülükler'];
-      for (var header in expectedHeaders) {
-        if (!table.rows[0].any((cell) => cell?.value.toString() == header)) {
-          return 'Bilanço tablosunda beklenen başlık bulunamadı: $header';
-        }
-      }
-      // Tüm kontrolleri başarıyla geçtiyse, dosya bir bilanço tablosu içeriyor
+      // Tüm kontrolleri geçtikten sonra hiçbir uyarı mesajı döndürme
       return null;
     } catch (e) {
       return e.toString();
@@ -90,7 +106,10 @@ class _RatioAnalysisViewState extends State<RatioAnalysisView> {
         children: [
           const Padding(
             padding: EdgeInsets.only(top: 20, left: 10),
-            child: Text('Lütfen bilanço tablonuzu yükleyiniz.', style: TextStyle(color: Colors.black, )),
+            child: Text(
+              'Lütfen bilanço tablonuzu yükleyiniz.',
+              style: TextStyle(color: Colors.black),
+            ),
           ),
           const Padding(
             padding: EdgeInsets.only(top: 10, left: 10),
@@ -100,8 +119,11 @@ class _RatioAnalysisViewState extends State<RatioAnalysisView> {
             padding: const EdgeInsets.only(top: 80, left: 20),
             child: Row(
               children: [
-                ElevatedButton(onPressed: () {}, child: const Text('Geçmiş Analizlerim')),
-                const SizedBox(width: 30,),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('Geçmiş Analizlerim'),
+                ),
+                const SizedBox(width: 30),
                 ElevatedButton(
                   onPressed: () async {
                     try {
@@ -126,7 +148,7 @@ class _RatioAnalysisViewState extends State<RatioAnalysisView> {
                 padding: EdgeInsets.only(top: 30, left: 10),
                 child: Text(
                   'Seçilen Dosyalar',
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
             ),

@@ -8,7 +8,7 @@ Future<List<File?>> getMultipleFile() async {
   final result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
       type: FileType.custom,
-      allowedExtensions: ['xlsx']);
+      allowedExtensions: ['xlsx'],);
   if (result != null) {
     final List<File?> file =
     result.paths.map((path) => File(path!)).toList();
