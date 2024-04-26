@@ -53,12 +53,12 @@ class _AnalysisViewState extends State<AnalysisView> {
                 padding: EdgeInsets.only(top: 30, left: 10),
                 child: Text(
                   'Seçilen Dosyalar',
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
           ),
-          const SizedBox(height: 10.0), // Add some spacing
+          const SizedBox(height: 10), // Add some spacing
           Expanded(
             child: ListView.builder(
               itemCount: files.length,

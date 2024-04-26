@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:busi/calculations/ratio_calculations.dart';
 import 'package:busi/consts/getMultipleFile.dart';
 import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
@@ -8,25 +9,25 @@ class RatioAnalysisView extends StatefulWidget {
   const RatioAnalysisView({super.key});
 
   @override
-  State<RatioAnalysisView> createState() => _RatioAnalysisViewState();
+  State<RatioAnalysisView> createState() => RatioAnalysisViewState();
 }
 
-class _RatioAnalysisViewState extends State<RatioAnalysisView> {
+class RatioAnalysisViewState extends State<RatioAnalysisView> {
   List<File?> files = [];
+  late List<List<String>> allData;
 
   Future<void> readExcelFile(File file) async {
     final bytes = await file.readAsBytes();
     final excel = Excel.decodeBytes(bytes);
-
-    final allData = <List<dynamic>>[];
+    allData = [];
 
     // Tüm sayfalardaki veri hücrelerini al
     excel.tables.forEach((sheetName, table) {
       table!.rows.forEach((row) {
-        allData.add(row.map((cell) => cell?.value).toList());
+        // Cast each cell value to String and add it to the row
+        allData.add(row.map((cell) => cell?.value.toString() ?? '').toList());
       });
     });
-
     // Verileri tablo halinde ekrana bas
     await showDialog(
       context: context,
@@ -44,7 +45,7 @@ class _RatioAnalysisViewState extends State<RatioAnalysisView> {
                     (index) => DataRow(
                   cells: List.generate(
                     allData[index + 1].length, // İlk satır başlık olduğu için +1
-                        (cellIndex) => DataCell(Text('${allData[index + 1][cellIndex]}')),
+                        (cellIndex) => DataCell(Text(allData[index + 1][cellIndex])),
                   ),
                 ),
               ),
@@ -53,8 +54,13 @@ class _RatioAnalysisViewState extends State<RatioAnalysisView> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
-              },
+                if(allData.isNotEmpty){
+                  SayStocks(allData);
+                }
+                else{
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Lütfen doğru dosya giriniz.")));
+                }
+                },
               child: const Text('Devam Et'),
             ),
             TextButton(
@@ -69,7 +75,8 @@ class _RatioAnalysisViewState extends State<RatioAnalysisView> {
     );
   }
 
-  Future<void> validateFiles() async {
+
+Future<void> validateFiles() async {
     for (var i = 0; i < files.length; i++) {
       final message = await checkBalanceSheet(files[i]!);
       if (message != null) {
