@@ -2,24 +2,32 @@ import 'package:busi/firebase_options.dart';
 import 'package:busi/views/analysis_view/ratio_analysis_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-
-class SayStocks {
+class Values {
   final List<List<String>> data;
+  final List<String> value = ['Ticari Alacaklar', "Stoklar", "Duran Varlıklar",
+    'Net Satışlar', "Dönen Varlıklar", "Diğer Alacaklar", "Kısa Vadeli Borçlar"];
 
-  SayStocks(this.data) {
+  Values(this.data) {
     if (data.isNotEmpty && data.first.length >= 5) {
-      int rowIndex = data.indexWhere((row) => row.contains('Stoklar'));
+      final foundRows = [];
 
-      if (rowIndex != -1) {
-        // Print the row containing "Stoklar"
-        print(data[rowIndex]);
+      // Search for all matching values
+      for (final searchValue in value) {
+        final rowIndex = data.indexWhere((row) => row.contains(searchValue));
+        if (rowIndex != -1) {
+          foundRows.add(data[rowIndex]);
+        }
+      }
+
+      if (foundRows.isNotEmpty) {
+        for (final row in foundRows) {
+          print(row);
+        }
       } else {
-        print('Stoklar başlığı dosyada bulunamadı');
+        print('Hiçbiri (${value.join(', ')}) dosyada bulunamadı');
       }
     } else {
       print('Geçersiz veri');
     }
   }
 }
-
-

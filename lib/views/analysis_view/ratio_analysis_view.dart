@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:busi/calculations/ratio_calculations.dart';
 import 'package:busi/consts/getMultipleFile.dart';
+import 'package:busi/views/show_ratio_analysis_results.dart';
 import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +25,9 @@ class RatioAnalysisViewState extends State<RatioAnalysisView> {
     // Tüm sayfalardaki veri hücrelerini al
     excel.tables.forEach((sheetName, table) {
       table!.rows.forEach((row) {
-        // Cast each cell value to String and add it to the row
         allData.add(row.map((cell) => cell?.value.toString() ?? '').toList());
       });
     });
-    // Verileri tablo halinde ekrana bas
     await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -55,7 +54,9 @@ class RatioAnalysisViewState extends State<RatioAnalysisView> {
             TextButton(
               onPressed: () {
                 if(allData.isNotEmpty){
-                  SayStocks(allData);
+                  Values(allData);
+                  Navigator.pushReplacement(context, const ShowRatioResults()
+                  as Route<Object?>);
                 }
                 else{
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Lütfen doğru dosya giriniz.")));
