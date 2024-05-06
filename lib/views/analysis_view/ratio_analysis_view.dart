@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:busi/calculations/ratio_calculations.dart';
 import 'package:busi/consts/getMultipleFile.dart';
+import 'package:busi/consts/navigator.dart';
 import 'package:busi/views/show_ratio_analysis_results.dart';
 import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
@@ -54,9 +55,9 @@ class RatioAnalysisViewState extends State<RatioAnalysisView> {
             TextButton(
               onPressed: () {
                 if(allData.isNotEmpty){
-                  Values(allData);
-                  Navigator.pushReplacement(context, const ShowRatioResults()
-                  as Route<Object?>);
+                  Values(data: allData);
+                  NavigateToWidget.navigateToScreen(context, ShowRatioResults(value: allData),);
+
                 }
                 else{
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Lütfen doğru dosya giriniz.")));
@@ -75,7 +76,6 @@ class RatioAnalysisViewState extends State<RatioAnalysisView> {
       },
     );
   }
-
 
 Future<void> validateFiles() async {
     for (var i = 0; i < files.length; i++) {
@@ -140,7 +140,8 @@ Future<void> validateFiles() async {
                         files = selectedFiles;
                       });
                     } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Lütfen en az 1 dosya seçiniz')));
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text
+                        ('Lütfen en az 1 dosya seçiniz'),),);
                     }
                   },
                   child: const Text("Excel'den Aktar"),
