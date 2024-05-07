@@ -1,7 +1,13 @@
-
 class OranAnalizi{
-  List<String> kisaVadeYabanciKaynaklar = ["Mali Borclar","Ticari Borclar","Diger Borclar","Alinan Avanslar","Odenecek Vergi ve Yukumlulukler","Borc ve Gider Karşiliklari"
-      "Gelecek Aylara Ait Gelirler ve Gider Tahakkuklari",
+  OranAnalizi(){
+    pasifler..addAll(kisaVadeYabanciKaynaklar)
+    ..addAll(uzunVadeYabanciKaynaklar)
+    ..addAll(ozKaynak);
+    tumDegerler..addAll(aktifler)
+    ..addAll(pasifler);
+  }
+  List<String> kisaVadeYabanciKaynaklar = ['Mali Borclar','Ticari Borclar',"Diger Borclar","Alinan Avanslar","Odenecek Vergi ve Yukumlulukler","Borc ve Gider Karşiliklari"
+      'Gelecek Aylara Ait Gelirler ve Gider Tahakkuklari',
     "Diger Kisa Vadeli Yabanci Kaynaklar"];
   List<String> uzunVadeYabanciKaynaklar = ["Mali Borçlar","Ticari Borclar","Diger Borclar","Alinan Avanslar","Borc ve Gider Karsiliklari","Gelecek Yillara Ait Gelir ve Gider Kaynaklari",
     "Diger Uzun Vadeli Yabanci Kaynaklar"];
@@ -9,16 +15,9 @@ class OranAnalizi{
 
   List<String> aktifler = [];
   List<String> pasifler = [];
-
-  OranAnalizi(){
-    pasifler.addAll(kisaVadeYabanciKaynaklar);
-    pasifler.addAll(uzunVadeYabanciKaynaklar);
-    pasifler.addAll(ozKaynak);
-
-  }
+  List<String> tumDegerler = [];
 
 }
-
 class LikiditeOranlari extends OranAnalizi{
   double? mevcutVarliklar;
   double? NakitVeNakitBenzeriVarliklar;
@@ -61,10 +60,10 @@ class FaaliyetOranlari extends OranAnalizi{
   double? aktifDevirHizi(){
     return netSatislar!/aktifToplam!;
   }
-  void stokHesaplamaYazdir(){
-    print(" Stokların bir yıl içinde kaç kez paraya"
-        "dönüştürüldüğünü ifade eder " + "$stokDevirHizi()");
-  }
+  // void stokHesaplamaYazdir(){
+  //   print(" Stokların bir yıl içinde kaç kez paraya"
+  //       "dönüştürüldüğünü ifade eder " + "$stokDevirHizi()");
+  // }
 }
 
 class MaliYapiOranlari extends OranAnalizi{
