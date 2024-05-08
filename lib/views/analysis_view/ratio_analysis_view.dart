@@ -168,13 +168,14 @@ class RatioAnalysisViewState extends State<RatioAnalysisView> {
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: () {},
-                  icon: const Icon(Icons.file_upload),
+                  icon: const Icon(Icons.analytics_outlined),
                   label: const Text(
                     'Geçmiş Analizlerim',
                     style: TextStyle(fontSize: 16),
                   ),
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white, backgroundColor: Colors.blueAccent, padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                    foregroundColor: Colors.white, backgroundColor: Colors.blueAccent,
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

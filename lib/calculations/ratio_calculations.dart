@@ -3,15 +3,19 @@ class OranAnalizi{
     pasifler..addAll(kisaVadeYabanciKaynaklar)
     ..addAll(uzunVadeYabanciKaynaklar)
     ..addAll(ozKaynak);
+    aktifler..addAll(donenKaynaklar)
+    ..addAll(duranKaynaklar);
     tumDegerler..addAll(aktifler)
     ..addAll(pasifler);
   }
-  List<String> kisaVadeYabanciKaynaklar = ['Mali Borclar','Ticari Borclar',"Diger Borclar","Alinan Avanslar","Odenecek Vergi ve Yukumlulukler","Borc ve Gider Karşiliklari"
+  List<String> kisaVadeYabanciKaynaklar = ['Mali Borclar','Ticari Borclar','Diger Borclar',"Alinan Avanslar","Odenecek Vergi ve Yukumlulukler","Borc ve Gider Karşiliklari"
       'Gelecek Aylara Ait Gelirler ve Gider Tahakkuklari',
     "Diger Kisa Vadeli Yabanci Kaynaklar"];
   List<String> uzunVadeYabanciKaynaklar = ["Mali Borçlar","Ticari Borclar","Diger Borclar","Alinan Avanslar","Borc ve Gider Karsiliklari","Gelecek Yillara Ait Gelir ve Gider Kaynaklari",
     "Diger Uzun Vadeli Yabanci Kaynaklar"];
   List<String> ozKaynak = ["Odenmis Sermaye","Sermaye Yedekleri","Kar Yedekleri","Gecmis Yil Karlari","Donem Net Kari","Gecmis Yil Zararlari"];
+  List<String> donenKaynaklar = ["Dönen Varlıklar","Nakit Ve Benzerleri","Kısa Vadeli Ticari Alacaklar","Stoklar","Diğer Dönen Varlıklar"];
+  List<String> duranKaynaklar = ["Finansal Duran Varlıklar","Duran Varlıklar (Maddi ve Olmayan)","Diğer Duran Varlıklar"];
 
   List<String> aktifler = [];
   List<String> pasifler = [];

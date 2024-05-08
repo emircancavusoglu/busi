@@ -1,4 +1,3 @@
-import 'package:busi/calculations/ratio_calculations.dart';
 import 'package:flutter/material.dart';
 class ShowRatioResults extends StatefulWidget {
   const ShowRatioResults({required this.value, super.key});
@@ -10,6 +9,7 @@ class ShowRatioResults extends StatefulWidget {
 
 class _ShowRatioResultsState extends State<ShowRatioResults> {
   late Values values;
+
   @override
   void initState() {
     super.initState();
@@ -35,7 +35,7 @@ class _ShowRatioResultsState extends State<ShowRatioResults> {
   }
 }
 
-class Values extends OranAnalizi {
+class Values {
 
   Values({required this.data}) {
     if (data.isNotEmpty && data.first.length >= 5) {
