@@ -20,23 +20,47 @@ class OranAnalizi{
   List<String> aktifler = [];
   List<String> pasifler = [];
   List<String> tumDegerler = [];
-
 }
-class LikiditeOranlari extends OranAnalizi{
+class LikiditeOranlari extends OranAnalizi {
   double? mevcutVarliklar;
   double? NakitVeNakitBenzeriVarliklar;
   double? PesinOlarakKolayliklaDonusturulebilenVarliklar;
   double? MevcutYukumlulukler;
+  double? donenVarliklar;
+  double? duranVarliklar;
 
-  double? cariOran(){
-    return mevcutVarliklar!/MevcutYukumlulukler!;
-  }
-  double? asitTestOrani(){
-    return (NakitVeNakitBenzeriVarliklar!+PesinOlarakKolayliklaDonusturulebilenVarliklar!)/MevcutYukumlulukler!;
+  double? deneme(){
+    if(donenVarliklar!= null && duranVarliklar != null && duranVarliklar != 0){
+      return donenVarliklar!/duranVarliklar!;
+    }
+    return null;
   }
 
-  double? nakitOrani(){
-    return NakitVeNakitBenzeriVarliklar!/MevcutYukumlulukler!;
+  double? cariOran() {
+    if (mevcutVarliklar != null && MevcutYukumlulukler != null && MevcutYukumlulukler != 0) {
+      return mevcutVarliklar! / MevcutYukumlulukler!;
+    } else {
+      return null;
+    }
+  }
+
+  double? asitTestOrani() {
+    if (NakitVeNakitBenzeriVarliklar != null &&
+        PesinOlarakKolayliklaDonusturulebilenVarliklar != null &&
+        MevcutYukumlulukler != null &&
+        MevcutYukumlulukler != 0) {
+      return (NakitVeNakitBenzeriVarliklar! + PesinOlarakKolayliklaDonusturulebilenVarliklar!) / MevcutYukumlulukler!;
+    } else {
+      return null;
+    }
+  }
+
+  double? nakitOrani() {
+    if (NakitVeNakitBenzeriVarliklar != null && MevcutYukumlulukler != null && MevcutYukumlulukler != 0) {
+      return NakitVeNakitBenzeriVarliklar! / MevcutYukumlulukler!;
+    } else {
+      return null;
+    }
   }
 }
 
@@ -50,24 +74,44 @@ class FaaliyetOranlari extends OranAnalizi{
   double? aktifToplam;
 
   double? stokDevirHizi(){
-    return satilanTicariMallarinMaliyeti!/ortalamaTicariMalStoku!;
+    if (satilanTicariMallarinMaliyeti != null && ortalamaTicariMalStoku != null && ortalamaTicariMalStoku != 0) {
+      return satilanTicariMallarinMaliyeti! / ortalamaTicariMalStoku!;
+    } else {
+      return null;
+    }
   }
+
   double? stokDevretmeSuresi(){
-    return 360/stokDevirSuresi!;
+    if (stokDevirSuresi != null && stokDevirSuresi != 0) {
+      return 360 / stokDevirSuresi!;
+    } else {
+      return null;
+    }
   }
+
   double? alacakDevretmeHizi(){
-    return 360/stokDevirSuresi!;
+    if (stokDevirSuresi != null && stokDevirSuresi != 0) {
+      return 360 / stokDevirSuresi!;
+    } else {
+      return null;
+    }
   }
+
   double? AlacaklarinOrtalamaTahsilatSuresi(){
-    return 360/alacakDevretmeHizi()!;
+    if (alacakDevirHizi != null && alacakDevirHizi != 0) {
+      return 360 / alacakDevirHizi!;
+    } else {
+      return null;
+    }
   }
+
   double? aktifDevirHizi(){
-    return netSatislar!/aktifToplam!;
+    if (netSatislar != null && aktifToplam != null && aktifToplam != 0) {
+      return netSatislar! / aktifToplam!;
+    } else {
+      return null;
+    }
   }
-  // void stokHesaplamaYazdir(){
-  //   print(" Stokların bir yıl içinde kaç kez paraya"
-  //       "dönüştürüldüğünü ifade eder " + "$stokDevirHizi()");
-  // }
 }
 
 class MaliYapiOranlari extends OranAnalizi{
@@ -77,49 +121,117 @@ class MaliYapiOranlari extends OranAnalizi{
   double? uzunVadeliYabanciKaynaklar;
   double? ozKaynaklar;
 
+  // void setData(List<List<String>> data, Map<String, int>? columnNameMap) {
+  //   if (columnNameMap != null) {
+  //     toplamYabanciKaynaklar = double.tryParse(data[0][columnNameMap['Toplam Yabancı Kaynaklar']!]) ?? 0.0;
+  //     pasifToplam = double.tryParse(data[0][columnNameMap['Pasif Toplam']!]) ?? 0.0;
+  //     kisaVadeliYabanciKaynaklar = double.tryParse(data[0][columnNameMap['Kısa Vadeli Yabancı Kaynaklar']!]) ?? 0.0;
+  //     uzunVadeliYabanciKaynaklar = double.tryParse(data[0][columnNameMap['Uzun Vadeli Yabancı Kaynaklar']!]) ?? 0.0;
+  //     ozKaynaklar = double.tryParse(data[0][columnNameMap['Öz Kaynaklar']!]) ?? 0.0;
+  //   } else {
+  //     print('columnNameMap is null!');
+  //   }
+  // }
+
   double? kaldiracOrani(){
-    return toplamYabanciKaynaklar!/pasifToplam!;
+    if (toplamYabanciKaynaklar != null && pasifToplam != null && pasifToplam != 0) {
+      return toplamYabanciKaynaklar! / pasifToplam!;
+    } else {
+      return null;
+    }
   }
 
   double? kisaVadeliYabanciKaynakOrani(){
-    return toplamYabanciKaynaklar!/pasifToplam!;
+    if (toplamYabanciKaynaklar != null && pasifToplam != null && pasifToplam != 0) {
+      return kisaVadeliYabanciKaynaklar! / pasifToplam!;
+    } else {
+      return null;
+    }
+  }
+  double? uzunVadeliYabanciKaynakOrani(){
+    if (uzunVadeliYabanciKaynaklar != null && pasifToplam != null && pasifToplam != 0) {
+      return uzunVadeliYabanciKaynaklar! / pasifToplam!;
+    } else {
+      return null;
+    }
   }
 
-  double? uzunVadeliYabanciKaynakOrani(){
-    return uzunVadeliYabanciKaynaklar!/pasifToplam!;
-  }
   double? ozKaynaklarOrani(){
-    return ozKaynaklar!/pasifToplam!;
+    if (ozKaynaklar != null && pasifToplam != null && pasifToplam != 0) {
+      return ozKaynaklar! / pasifToplam!;
+    } else {
+      return null;
+    }
   }
 
   double? yabanciKaynaklarinOzKaynaklaraOrani(){
-    return toplamYabanciKaynaklar!/ozKaynaklar!;
+    if (toplamYabanciKaynaklar != null && ozKaynaklar != null && ozKaynaklar != 0) {
+      return toplamYabanciKaynaklar! / ozKaynaklar!;
+    } else {
+      return null;
+    }
   }
-
 }
 
-class KarlilikOranlari{
+class KarlilikOranlari {
   double? brutSatisKari;
   double? netSatislar;
   double? faaliyetKari;
   double? donemKari;
   double? aktifToplam;
   double? ozKaynaklar;
+  //
+  // void setData(List<List<String>> data, Map<String, int>? columnNameMap) {
+  //   if (columnNameMap != null && columnNameMap.isNotEmpty) {
+  //     brutSatisKari = columnNameMap['Brüt Satış Karı'] != null ? double.tryParse(data[0][columnNameMap['Brüt Satış Karı']!] ?? '0') ?? 0.0 : null;
+  //     netSatislar = columnNameMap['Net Satışlar'] != null ? double.tryParse(data[0][columnNameMap['Net Satışlar']!] ?? '0') ?? 0.0 : null;
+  //     faaliyetKari = columnNameMap['Faaliyet Karı'] != null ? double.tryParse(data[0][columnNameMap['Faaliyet Karı']!] ?? '0') ?? 0.0 : null;
+  //     donemKari = columnNameMap['Dönem Karı'] != null ? double.tryParse(data[0][columnNameMap['Dönem Karı']!] ?? '0') ?? 0.0 : null;
+  //     aktifToplam = columnNameMap['Aktif Toplam'] != null ? double.tryParse(data[0][columnNameMap['Aktif Toplam']!] ?? '0') ?? 0.0 : null;
+  //     ozKaynaklar = columnNameMap['Öz Kaynaklar'] != null ? double.tryParse(data[0][columnNameMap['Öz Kaynaklar']!] ?? '0') ?? 0.0 : null;
+  //   } else {
+  //     print('columnNameMap is null or empty!');
+  //   }
+  // }
 
-  double? karlilik1(){
-    return brutSatisKari!/netSatislar!;
-  }
-  double? karlilik2(){
-    return faaliyetKari!/netSatislar!;
-  }
-  double? karlilik3(){
-    return donemKari!/netSatislar!;
 
+  double? karlilik1() {
+    if (brutSatisKari != null && netSatislar != null && netSatislar != 0) {
+      return brutSatisKari! / netSatislar!;
+    } else {
+      return null;
+    }
   }
-  double? karlilik4(){
-    return donemKari!/aktifToplam!;
+
+  double? karlilik2() {
+    if (faaliyetKari != null && netSatislar != null && netSatislar != 0) {
+      return faaliyetKari! / netSatislar!;
+    } else {
+      return null;
+    }
   }
-  double? karlilik5(){
-    return donemKari!/ozKaynaklar!;
+
+  double? karlilik3() {
+    if (donemKari != null && netSatislar != null && netSatislar != 0) {
+      return donemKari! / netSatislar!;
+    } else {
+      return null;
+    }
+  }
+
+  double? karlilik4() {
+    if (donemKari != null && aktifToplam != null && aktifToplam != 0) {
+      return donemKari! / aktifToplam!;
+    } else {
+      return null;
+    }
+  }
+
+  double? karlilik5() {
+    if (donemKari != null && ozKaynaklar != null && ozKaynaklar != 0) {
+      return donemKari! / ozKaynaklar!;
+    } else {
+      return null;
+    }
   }
 }

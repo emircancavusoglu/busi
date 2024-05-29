@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:busi/prototype/ratio_analysis_results_prototype.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -32,6 +33,9 @@ class _AnalysisViewState extends State<AnalysisView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Analiz'),
+        flexibleSpace: FlexibleWdiget(),
+        iconTheme: IconThemeData(color: Colors.white),
+
       ),
       body: Column(
         children: [
@@ -39,7 +43,8 @@ class _AnalysisViewState extends State<AnalysisView> {
             padding: const EdgeInsets.only(top: 100),
             child: Row(
               children: [
-                   ElevatedButton(onPressed: (){}, child: const Text('Geçmiş Analizlerim')),
+                   ElevatedButton(onPressed: (){},
+                       child: const Text('Geçmiş Analizlerim')),
                    const SizedBox(width: 30,),
                    ElevatedButton(onPressed: getMultipleFile, child: const Text("Excel'den Aktar")),
               ],

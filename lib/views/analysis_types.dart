@@ -1,4 +1,9 @@
+import 'package:busi/calculations/ratio_calculations.dart';
 import 'package:busi/consts/navigator.dart';
+import 'package:busi/prototype/advices_prototype.dart';
+import 'package:busi/prototype/ratio_analysis_results_prototype.dart';
+import 'package:busi/prototype/sector_choose_prototype.dart';
+import 'package:busi/prototype/stress_testing_choose_prototype.dart';
 import 'package:busi/views/analysis_view.dart';
 import 'package:busi/views/analysis_view/du_pont_analysis_view.dart';
 import 'package:busi/views/analysis_view/horizontal_analysis_view.dart';
@@ -9,6 +14,9 @@ import 'package:busi/views/analysis_view/sector_analysis_view.dart';
 import 'package:busi/views/analysis_view/trend_analysis_view.dart';
 import 'package:busi/views/analysis_view/vertical_analysis.dart';
 import 'package:flutter/material.dart';
+
+import '../prototype/bankruptcy_risk_prediction_prototype.dart';
+import '../prototype/proforma_tables_prototype.dart';
 
 class AnalysisTypes extends StatelessWidget {
   const AnalysisTypes({Key? key}) : super(key: key);
@@ -36,7 +44,6 @@ class AnalysisTypes extends StatelessWidget {
       ),
     );
   }
-
   Widget analysisCard(BuildContext context, String title, String description, Color color) {
     late Widget destinationScreen;
 
@@ -48,27 +55,26 @@ class AnalysisTypes extends StatelessWidget {
         destinationScreen = DuPontAnalysisView();
         break;
       case 'Trend Analizi':
-        destinationScreen = TrendAnalysisView();
+        destinationScreen = const AdvicesPrototype();
         break;
       case 'Dikey Analiz':
-        destinationScreen = VerticalAnalysisView();
+        destinationScreen = StressTestingProtoype();
         break;
       case 'Yatay Analiz':
-        destinationScreen = HorizontalAnalysisView();
+        destinationScreen = const SectorChoosePrototype();
         break;
       case 'Oran Analizi':
         destinationScreen = RatioAnalysisView();
         break;
       case 'Risk Analizi':
-        destinationScreen = RiskAnalysisView();
+        destinationScreen = ChartApp();
         break;
       case 'Karlılık Analizi':
-        destinationScreen = ProfitableAnalysisView();
+        destinationScreen = BilancoProforma();
         break;
       default:
         destinationScreen = AnalysisView();
     }
-
   return Card(
       color: color,
       shape: RoundedRectangleBorder(
