@@ -2,26 +2,26 @@ import 'package:busi/prototype/ratio_analysis_results_prototype.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class AdvicesPrototype extends StatelessWidget {
-  const AdvicesPrototype({Key? key}) : super(key: key);
+class Advices extends StatelessWidget {
+  const Advices({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ABC Şirketi İçin Tavsiyelerimiz',
+        title: const Text('Şirketiniz İçin Tavsiyelerimiz',
             style: TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: Colors.transparent,
-        flexibleSpace: FlexibleWdiget(),
+        flexibleSpace: const FlexibleWdiget(),
         iconTheme: buildIconThemeData(),
       ),
-      body: ContainerWidget(),
+      body: const ContainerWidget(),
     );
   }
 
   IconThemeData buildIconThemeData() =>
-      IconThemeData(color: Colors.white);
+      const IconThemeData(color: Colors.white);
 }
 
 class ContainerWidget extends StatelessWidget {
@@ -114,8 +114,17 @@ class ContainerWidget extends StatelessWidget {
 }
 
 class SalesData {
-  final String month;
-  final double sales;
 
   SalesData(this.month, this.sales);
+  final String month;
+  final double sales;
+}
+
+class AdvicesForMeal{
+  String advice = 'Artan likidite ihtiyacına yönelik'
+      ' önlemler alınmalıdır, örneğin alacakların tahsilat süreci iyileştirilmeli ya da'
+      ' stok yönetimi revize edilmelidir.';
+}
+class AdvicesForAccomodition{
+  String advice = 'Konaklama için tavsiyelelelerlrrlrl';
 }

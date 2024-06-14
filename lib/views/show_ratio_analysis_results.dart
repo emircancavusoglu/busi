@@ -1,9 +1,12 @@
 import 'package:busi/calculations/ratio_calculations.dart';
+import 'package:busi/prototype/proforma_tables_prototype.dart';
+import 'package:busi/views/proforoma_table.dart';
 import 'package:flutter/material.dart';
 
 class ShowRatioResults extends StatefulWidget {
-  const ShowRatioResults({required this.value, required this.sonuc, Key? key, this.sonuc2, this.sonuc3})
-      : super(key: key);
+  const ShowRatioResults({required this.value, required this.sonuc, super.key,
+    this.sonuc2,
+    this.sonuc3});
   final List<List<String>> value;
   final double? sonuc;
   final double? sonuc2;

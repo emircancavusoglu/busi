@@ -1,5 +1,5 @@
 
-import 'package:busi/views/analysis_types.dart';
+import 'package:busi/views/analysis_view/analysis_types.dart';
 import 'package:busi/views/analysis_view.dart';
 import 'package:busi/views/main_page_view.dart';
 import 'package:busi/views/sales_view.dart';

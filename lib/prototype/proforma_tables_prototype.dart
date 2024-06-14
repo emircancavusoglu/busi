@@ -1,29 +1,31 @@
 import 'dart:math';
-
 import 'package:busi/prototype/ratio_analysis_results_prototype.dart';
 import 'package:flutter/material.dart';
 
 class BilancoProforma extends StatelessWidget {
   final List<String> yillar = ['Yıl 1', 'Yıl 2', 'Yıl 3', 'Yıl 4', 'Yıl 5'];
-  final List<String> varliklar = ['Dönen Varlıklar', 'Nakit ve Benzerleri', 'Kısa Vadeli Ticari Alacaklar', 'Stoklar', 'Diğer Dönen Varlıklar',];
-  final List<String> borclar = ['Finansal Duran Varlıklar', 'Duran Varlıklar', 'Diğer Duran Varlıklar',];
+  final List<String> varliklar = ['Dönen Varlıklar', 'Nakit ve Benzerleri', 'Kısa Vadeli Ticari Alacaklar', 'Stoklar', 'Diğer Dönen Varlıklar'];
+  final List<String> borclar = ['Finansal Duran Varlıklar', 'Duran Varlıklar', 'Diğer Duran Varlıklar'];
   final List<String> ozkaynaklar = ['Kısa Vadeli Borçlar', 'Finansal Borçlar', 'Ticari Borçlar'];
 
-  // Rastgele sayı üretmek için bir fonksiyon
-  double rastgeleSayiUret(double min, double max) {
-    final Random rastgele = Random();
-    return min + rastgele.nextDouble() * (max - min);
-  }
-
-  // Rastgele verilerle bilanço proforma tablosunu oluşturan bir fonksiyon
-  List<List<double>> rastgeleVeriUret() {
+  // Geçmiş verilere dayalı bütçeleme modelini kullanan fonksiyon
+  List<List<double>> butcelemeModeli() {
     final List<List<double>> veriler = [];
 
-    // Varlık (assets) verileri
+    // Varsayılan geçmiş veriler
+    final List<double> gecmisVeriler = [500000, 550000, 605000, 665500, 732005]; // Basit bir yıllık %10 artış örneği
+
+    // Büyüme oranları
+    const double buyumeOraniVarliklar = 0.1;
+    const double buyumeOraniBorclar = 0.08;
+    const double buyumeOraniOzkaynaklar = 0.12;
+
+    // Varlıklar (assets) verileri
     for (int i = 0; i < varliklar.length - 1; i++) {
       final List<double> satir = [];
       for (int j = 0; j < yillar.length; j++) {
-        satir.add(rastgeleSayiUret(10000, 100000)); // 10.000 ile 1.000.000 arasında rastgele varlık verisi oluşturur
+        double deger = gecmisVeriler[j] * pow(1 + buyumeOraniVarliklar, j);
+        satir.add(deger);
       }
       veriler.add(satir);
     }
@@ -43,7 +45,8 @@ class BilancoProforma extends StatelessWidget {
     for (int i = 0; i < borclar.length - 1; i++) {
       final List<double> satir = [];
       for (int j = 0; j < yillar.length; j++) {
-        satir.add(rastgeleSayiUret(1000, 500000)); // 1.000 ile 500.000 arasında rastgele borç verisi oluşturur
+        double deger = gecmisVeriler[j] * pow(1 + buyumeOraniBorclar, j);
+        satir.add(deger);
       }
       veriler.add(satir);
     }
@@ -63,7 +66,8 @@ class BilancoProforma extends StatelessWidget {
     for (int i = 0; i < ozkaynaklar.length - 1; i++) {
       final List<double> satir = [];
       for (int j = 0; j < yillar.length; j++) {
-        satir.add(rastgeleSayiUret(1000, 500000)); // 1.000 ile 500.000 arasında rastgele özkaynak verisi oluşturur
+        double deger = gecmisVeriler[j] * pow(1 + buyumeOraniOzkaynaklar, j);
+        satir.add(deger);
       }
       veriler.add(satir);
     }
@@ -84,11 +88,11 @@ class BilancoProforma extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<List<double>> rastgeleVeri = rastgeleVeriUret();
+    final List<List<double>> butceVeri = butcelemeModeli();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bilanço Proforma',style: TextStyle(color: Colors.white),),
+        title: const Text('Bilanço Proforma', style: TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         flexibleSpace: FlexibleWdiget(),
@@ -108,7 +112,7 @@ class BilancoProforma extends StatelessWidget {
                   (etiket) => DataRow(
                 cells: [
                   DataCell(Text(etiket)),
-                  ...rastgeleVeri[varliklar.indexOf(etiket)].map((deger) => DataCell(Text('₺${deger.toStringAsFixed(2)}'))),
+                  ...butceVeri[varliklar.indexOf(etiket)].map((deger) => DataCell(Text('₺${deger.toStringAsFixed(2)}'))),
                 ],
               ),
             ),
@@ -116,7 +120,7 @@ class BilancoProforma extends StatelessWidget {
                   (etiket) => DataRow(
                 cells: [
                   DataCell(Text(etiket)),
-                  ...rastgeleVeri[borclar.indexOf(etiket) + varliklar.length - 1].map((deger) => DataCell(Text('₺${deger.toStringAsFixed(2)}'))),
+                  ...butceVeri[borclar.indexOf(etiket) + varliklar.length - 1].map((deger) => DataCell(Text('₺${deger.toStringAsFixed(2)}'))),
                 ],
               ),
             ),
@@ -124,7 +128,7 @@ class BilancoProforma extends StatelessWidget {
                   (etiket) => DataRow(
                 cells: [
                   DataCell(Text(etiket)),
-                  ...rastgeleVeri[ozkaynaklar.indexOf(etiket) + varliklar.length + borclar.length - 2].map((deger) => DataCell(Text('₺${deger.toStringAsFixed(2)}'))),
+                  ...butceVeri[ozkaynaklar.indexOf(etiket) + varliklar.length + borclar.length - 2].map((deger) => DataCell(Text('₺${deger.toStringAsFixed(2)}'))),
                 ],
               ),
             ),
