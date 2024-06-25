@@ -1,3 +1,4 @@
+import 'package:busi/views/analysis_view/analysis_types.dart';
 import 'package:flutter/material.dart';
 
 void alertDialog(BuildContext context,  String title, String message){
@@ -9,7 +10,8 @@ void alertDialog(BuildContext context,  String title, String message){
       content: Text(message),
       actions: <Widget>[
         TextButton(onPressed: (){
-          Navigator.of(context).pop();
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => AnalysisTypes(),));
         }, child: Text("Tamam"))
       ],
     );

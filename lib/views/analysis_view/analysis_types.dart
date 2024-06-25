@@ -44,7 +44,7 @@ class AnalysisTypes extends StatelessWidget {
     switch(title){
       case 'Tavsiyeler':
         destinationScreen = Advices(
-          key: key, sector: 'Yiyecek',
+          key: key, sector: 'Yiyecek', userId: '',
 
         );
         break;
