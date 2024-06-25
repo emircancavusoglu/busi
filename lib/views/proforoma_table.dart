@@ -52,10 +52,10 @@ class ProformaTable extends StatelessWidget {
             (index) => (donenVarliklarListesi[index] + duranVarliklarListesi[index])
                 - kisaVadeliBorclarListesi[index],);
 
-    veriler.add(donenVarliklarListesi);
-    veriler.add(duranVarliklarListesi);
-    veriler.add(kisaVadeliBorclarListesi);
-    veriler.add(ozkaynaklarListesi);
+    veriler..add(donenVarliklarListesi)
+    ..add(duranVarliklarListesi)
+    ..add(kisaVadeliBorclarListesi)
+    ..add(ozkaynaklarListesi);
 
     return veriler;
   }
@@ -63,7 +63,6 @@ class ProformaTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<List<double>> veriler = formulluVeriUret();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Proforma Tablolar'),
@@ -75,7 +74,7 @@ class ProformaTable extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         child: DataTable(
           columns: [
-            DataColumn(label: Text('Yıllar')),
+            const DataColumn(label: Text('Yıllar')),
             for (final yil in yillar) DataColumn(label: Text(yil)),
           ],
           rows: [

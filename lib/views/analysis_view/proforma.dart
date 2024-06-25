@@ -1,22 +1,24 @@
 import 'dart:io';
 import 'package:busi/consts/getMultipleFile.dart';
 import 'package:busi/consts/navigator.dart';
+import 'package:busi/views/analysis_view/analysis_types.dart';
 import 'package:busi/views/proforoma_table.dart';
 import 'package:busi/views/show_ratio_analysis_results.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 
-class Proforma_Analysis_View extends StatefulWidget {
-  const Proforma_Analysis_View({super.key});
+class ProformaAnalysis extends StatefulWidget {
+  const ProformaAnalysis({super.key});
 
   @override
-  State<Proforma_Analysis_View> createState() => Proforma_Analysis_ViewState();
+  State<ProformaAnalysis> createState() => ProformaAnalysisState();
 }
 
-class Proforma_Analysis_ViewState extends State<Proforma_Analysis_View> {
+class ProformaAnalysisState extends State<ProformaAnalysis> {
   List<File?> files = [];
   late List<List<String>> allData;
-  late double? donenVarliklar;
+   double? donenVarliklar;
   late double? duranVarliklar;
   double sonuc = 0;
   late double? kisaVadeliYukumlulukler;
@@ -95,7 +97,8 @@ class Proforma_Analysis_ViewState extends State<Proforma_Analysis_View> {
           sonuc = donenVarliklar!/duranVarliklar!;
           sonuc2 = donenVarliklar!/ kisaVadeliYukumlulukler!;
           sonuc3 = netKar!/netSatislar!;
-          NavigateToWidget.navigateToScreen(context, ProformaTable(donenVarliklar: 50000, duranVarliklar: 50000, kisaVadeliYukumlulukler: 50000,
+          NavigateToWidget.navigateToScreen(context, ProformaTable(donenVarliklar: 5000,
+              duranVarliklar: 50000, kisaVadeliYukumlulukler: 50000,
               netSatislar: 50000, netKar: 50000),);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -145,6 +148,11 @@ class Proforma_Analysis_ViewState extends State<Proforma_Analysis_View> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) =>
+              AnalysisTypes(),),);
+        },
+          icon: const Icon(Icons.chevron_left),),
         title: const Text('Proformanızı Oluşturun',style: TextStyle(color: Colors.white),),
         centerTitle: true,
         flexibleSpace: Container(
@@ -174,7 +182,8 @@ class Proforma_Analysis_ViewState extends State<Proforma_Analysis_View> {
             const SizedBox(height: 10),
             const Text(
               'Bilanço Tablonuzu Yükleyin',
-              style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.white, fontSize: 24, fontWeight:
+              FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 50),

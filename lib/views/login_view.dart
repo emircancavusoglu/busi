@@ -1,8 +1,6 @@
 import 'package:busi/consts/signIn.dart';
 import 'package:busi/views/main_page_view.dart';
-import 'package:busi/widget/bottom_navigation_bar.dart'; // Assuming you're using provider for navigation
 import 'package:flutter/material.dart';
-
 import '../auth/google_sign_in.dart';
 import '../consts/navigator.dart';
 

@@ -1,12 +1,10 @@
-
 import 'package:busi/views/analysis_view/analysis_types.dart';
 import 'package:busi/views/analysis_view.dart';
 import 'package:busi/views/main_page_view.dart';
-import 'package:busi/views/sales_view.dart';
+import 'package:busi/views/sector/sector_choose.dart';
 import 'package:busi/views/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../consts/navigator.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -20,7 +18,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   final tabs = [
     const MainPageView(),
     AnalysisView(),
-    SalesView(),
+    SectorChoose(),
     SettingsView(),
   ];
   int myIndex = 0;
@@ -41,7 +39,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               },icon: const Icon(Icons.analytics_outlined)),label: 'Analiz Yap'),
 
           BottomNavigationBarItem(icon: IconButton(onPressed: (){
-            NavigateToWidget.navigateToScreen(context, const SalesView());
+            NavigateToWidget.navigateToScreen(context, const SectorChoose());
           },icon: const Icon(Icons.format_list_numbered)),label: 'Sektör'),
 
           BottomNavigationBarItem(icon: IconButton(onPressed: (){

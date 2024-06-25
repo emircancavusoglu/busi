@@ -1,42 +1,66 @@
 import 'package:busi/calculations/ratio_calculations.dart';
-import 'package:busi/prototype/proforma_tables_prototype.dart';
-import 'package:busi/views/proforoma_table.dart';
+import 'package:busi/widget/alertDialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ShowRatioResults extends StatefulWidget {
-  const ShowRatioResults({required this.value, required this.sonuc, super.key,
-    this.sonuc2,
-    this.sonuc3});
+  const ShowRatioResults({required this.value, required this.likidite,
+    required this.cariOran, required this.netKarOran, super.key,
+    this.stokDevirHizi, this.alacakDevirHizi, this.aktifDevirHizi,
+    this.faaliyetKariOrani, this.brutKarOrani, this.netKarOrani,
+    });
   final List<List<String>> value;
-  final double? sonuc;
-  final double? sonuc2;
-  final double? sonuc3;
+  final double? likidite;
+  final double? cariOran;
+  final double? netKarOran;
+  final double? stokDevirHizi;
+  final double? alacakDevirHizi;
+  final double? aktifDevirHizi;
+  final double? faaliyetKariOrani;
+  final double? brutKarOrani;
+  final double? netKarOrani;
 
   @override
   State<ShowRatioResults> createState() => _ShowRatioResultsState();
 }
 
 class _ShowRatioResultsState extends State<ShowRatioResults> {
+  Future<void> saveResultsToFirestore() async {
+    try{
+      await FirebaseFirestore.instance.collection('bilanco').add({
+        'Likidite': widget.likidite,
+        'Cari Oran': widget.cariOran,
+        'Net Kar Oran': widget.netKarOran,
+        'Stok Devir Hızı' : widget.stokDevirHizi,
+        'Alacak Devir Hızı' : widget.alacakDevirHizi,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+      alertDialog(context, 'BAŞARILI', 'Oran analiziniz başarıyla kaydedildi');
+    }
+    catch(e){
+      alertDialog(context, 'Başarısız', 'Verileriniz kaydedilirken bir hata oluştu $e');
+    }
+
+  }
   // late Values values;
 
-  late LikiditeOranlari likiditeOranlari;
-  late KarlilikOranlari karlilikOranlari;
-  late double? donenVarliklar;
-  late double? duranVarliklar;
-
-
-  @override
-  void initState() {
-    super.initState();
-    // Eğer widget.value null değilse values ve likiditeOranlari başlatılır
-    if(widget.value != null) {
-      // values = Values(data: widget.value);
-      likiditeOranlari = LikiditeOranlari();
-      // donenVarliklar ve duranVarliklar değişkenlerine verileri atayalım
-      donenVarliklar = likiditeOranlari.donenVarliklar;
-      duranVarliklar = likiditeOranlari.duranVarliklar;
-    }
-  }
+  // late LikiditeOranlari likiditeOranlari;
+  // late KarlilikOranlari karlilikOranlari;
+  // late double? donenVarliklar;
+  // late double? duranVarliklar;
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // Eğer widget.value null değilse values ve likiditeOranlari başlatılır
+  //   if(widget.value != null) {
+  //     // values = Values(data: widget.value);
+  //     likiditeOranlari = LikiditeOranlari();
+  //     // donenVarliklar ve duranVarliklar değişkenlerine verileri atayalım
+  //     donenVarliklar = likiditeOranlari.donenVarliklar;
+  //     duranVarliklar = likiditeOranlari.duranVarliklar;
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -48,15 +72,31 @@ class _ShowRatioResultsState extends State<ShowRatioResults> {
         padding: const EdgeInsets.only(left: 10),
         child: Column(
           children: [
-            Text('Duran / Dönen : ${widget.sonuc?.toStringAsFixed(2)} ',style: const
+            Text('Duran / Dönen : ${widget.likidite?.toStringAsFixed(2)} ',style: const
             TextStyle(fontSize: 22),),
-            Text( 'Cari Oran : ${widget.sonuc2?.toStringAsFixed(2)}',style:
+            Text( 'Cari Oran : ${widget.cariOran?.toStringAsFixed(2)}',style:
             const TextStyle(fontSize: 22),) ,
-            Text( 'Net Kar Oran : ${widget.sonuc3?.toStringAsFixed(2)}',style:
+            Text( 'Net Kar Oran : ${widget.netKarOran?.toStringAsFixed(2)}',style:
               const TextStyle(fontSize: 22),) ,
+            Text( 'Stok Devir Hızı : ${widget.stokDevirHizi?.toStringAsFixed(2)}',style:
+              const TextStyle(fontSize: 22),) ,
+            Text( 'Alacak Devir Hızı : ${widget.alacakDevirHizi?.toStringAsFixed(2)}',style:
+              const TextStyle(fontSize: 22),) ,
+            Text( 'Brüt kar Oranı : ${widget.alacakDevirHizi?.toStringAsFixed(2)}',style:
+              const TextStyle(fontSize: 22),) ,
+            Text( 'Faaliyet Karı Oranı : ${widget.alacakDevirHizi?.toStringAsFixed(2)}',style:
+              const TextStyle(fontSize: 22),) ,
+            Text( 'Kaldıraç Oranı : ${widget.alacakDevirHizi?.toStringAsFixed(2)}',style:
+              const TextStyle(fontSize: 22),) ,
+            Text( 'Nakit Oranı : ${widget.alacakDevirHizi?.toStringAsFixed(2)}',style:
+              const TextStyle(fontSize: 22),) ,
+
           ],
         ),
       ),
+    floatingActionButton: FloatingActionButton(
+        onPressed: saveResultsToFirestore,
+      child: const Text("Kaydet"),),
     );
   }
 }

@@ -1,17 +1,19 @@
 import 'package:busi/consts/navigator.dart';
-import 'package:busi/prototype/advices_prototype.dart';
-import 'package:busi/prototype/bankruptcy_risk_prediction_prototype.dart';
-import 'package:busi/prototype/proforma_tables_prototype.dart';
-import 'package:busi/prototype/sector_choose_prototype.dart';
-import 'package:busi/prototype/stress_testing_choose_prototype.dart';
-import 'package:busi/views/analysis_view.dart';
+import 'package:busi/views/advices.dart';
 import 'package:busi/views/analysis_view/ratio.dart';
 import 'package:busi/views/analysis_view/proforma.dart';
 import 'package:busi/views/main_page_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+
+var userUid = "uid"; //fixme
 
 class AnalysisTypes extends StatelessWidget {
-  const AnalysisTypes({super.key});
+  const AnalysisTypes({ super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,25 +28,31 @@ class AnalysisTypes extends StatelessWidget {
       body: GridView.count(
         crossAxisCount: 2,
         children: [
-          analysisCard(context, 'Proforma', 'Geleceğe Yönelik Tablolarınızı Oluşturun', Colors.green),
-          analysisCard(context, 'Oran Analizi', 'Firma performansını ölçmek için oranları kullanın', Colors.teal),
-          analysisCard(context, 'Tavsiyeler', 'Firmanıza özelleştirilmiş rakip ve pazar analizi yapın', Colors.green),
+          analysisCard(context, 'Proforma', 'Geleceğe Yönelik Tablolarınızı Oluşturun',
+              Colors.green,),
+          analysisCard(context, 'Oran Analizi', 'Firma performansını ölçmek için oranları kullanın',
+              Colors.teal,),
+          analysisCard(context, 'Tavsiyeler', 'Firmanıza özelleştirilmiş pazar analizi, ve oran analizi sonuçlarına göre tavsiyeler alın', Colors.green),
         ],
       ),
     );
   }
-  Widget analysisCard(BuildContext context, String title, String description, Color color) {
+  Widget analysisCard(BuildContext context, String title, String description,
+      Color color,) {
     late Widget destinationScreen;
 
     switch(title){
       case 'Tavsiyeler':
-        destinationScreen = const AdvicesPrototype();
+        destinationScreen = Advices(
+          key: key, sector: 'Yiyecek',
+
+        );
         break;
       case 'Proforma':
-        destinationScreen =  Proforma_Analysis_View();
+        destinationScreen =  const ProformaAnalysis();
         break;
       case 'Oran Analizi':
-        destinationScreen = BilancoProforma();
+        destinationScreen = RatioAnalysis();
         break;
     }
   return Card(

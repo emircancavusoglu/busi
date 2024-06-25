@@ -11,8 +11,5 @@ class Question1 extends Questions{
   final String title = "";
   final String questions = "";
   final int options = 0;
-
-
-
 }
 

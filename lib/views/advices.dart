@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Advices extends StatelessWidget {
-  const Advices({Key? key}) : super(key: key);
+  Advices({Key? key, required String sector}) : super(key: key);
+  late String sector;
 
   @override
   Widget build(BuildContext context) {
@@ -51,14 +52,14 @@ class ContainerWidget extends StatelessWidget {
                   icon: const Icon(Icons.record_voice_over_outlined, color: Colors.white,),
                 ),
               ),
-              SizedBox(height: 5.0),
+              const SizedBox(height: 5.0),
               const Text(
                 'Bulunduğunuz pazarın yapısı ve trend analiz çalışmalarımız:',
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold,
                     color: Colors.white), // Metin rengi beyaza ayarlandı
               ),
               SizedBox(height: 10.0),
-              const Text(
+               const Text(
                 'Ana sektörünüz olan lokantacılık incelendiğinde, son bir yıllık '
                     'gelişim incelendiğinde %28 lik bir büyüme meydana gelmiştir (Enflasyon oranınına göre değerlendiriniz). Toplamda 45.000 lokanta hizmet vermekte ve'
                     'yapılan son anketler incelendiğinde organik ve sağlıklı ürünlerin trend kategpri olduğu görülmektedir.',

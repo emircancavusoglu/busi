@@ -1,9 +1,4 @@
-import 'package:busi/network/network_source.dart';
-import 'package:dio/dio.dart';
-
 class UnemploymentModel {
-  double? tPTIG08;
-  String? tarih;
 
   UnemploymentModel({this.tPTIG08, this.tarih});
 
@@ -11,7 +6,8 @@ class UnemploymentModel {
     tPTIG08 = json['TP_TIG08'] as double?;
     tarih = json['Tarih']?.toString();
   }
-
+  double? tPTIG08;
+  String? tarih;
 
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

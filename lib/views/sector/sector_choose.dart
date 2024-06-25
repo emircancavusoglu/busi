@@ -55,7 +55,7 @@ class _SectorChooseState extends State<SectorChoose> {
         if (mounted) { // State'in hala aktif olup olmadığını kontrol edin
           await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const RatioAnalysisView()),
+            MaterialPageRoute(builder: (context) => const RatioAnalysis()),
           );
         }
       }
