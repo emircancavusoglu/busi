@@ -3,14 +3,8 @@ import 'package:busi/views/advices.dart';
 import 'package:busi/views/analysis_view/ratio.dart';
 import 'package:busi/views/analysis_view/proforma.dart';
 import 'package:busi/views/main_page_view.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-
-var userUid = "uid"; //fixme
 
 class AnalysisTypes extends StatelessWidget {
   const AnalysisTypes({ super.key});
@@ -22,7 +16,7 @@ class AnalysisTypes extends StatelessWidget {
         title: const Text('Analiz Türleri'),
         leading: IconButton(onPressed: (){
           Navigator.push(context, MaterialPageRoute(builder: (context) =>
-              MainPageView(),));
+              const MainPageView(),));
         }, icon: const Icon(Icons.chevron_left)),
       ),
       body: GridView.count(
@@ -44,8 +38,7 @@ class AnalysisTypes extends StatelessWidget {
     switch(title){
       case 'Tavsiyeler':
         destinationScreen = Advices(
-          key: key, sector: 'Yiyecek', userId: '',
-
+          key: key, sector: '',
         );
         break;
       case 'Proforma':
