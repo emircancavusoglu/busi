@@ -17,7 +17,7 @@ class _SectorChooseState extends State<SectorChoose> {
 
   Future<void> addSectorToFirestore(String sector) async {
     try {
-      final String userId = GoogleAuthProvider().providerId; // Örnek kullanıcı kimliği
+      final String userId = GoogleAuthProvider().providerId;
 
       // Kullanıcının zaten sektörü olup olmadığını kontrol et
       final docSnapshot = await FirebaseFirestore.instance

@@ -25,7 +25,6 @@ class ShowRatioResults extends StatefulWidget {
 }
 
 class _ShowRatioResultsState extends State<ShowRatioResults> {
-  String advice = "";
   Future<void> saveResultsToFirestore() async {
     try{
       await FirebaseFirestore.instance.collection('bilanco').add({
@@ -42,23 +41,23 @@ class _ShowRatioResultsState extends State<ShowRatioResults> {
       alertDialog(context, 'Hata', 'Veriler kaydedilirken bir hata oluştu $e');
     }
   }
-  void createAdviceForMeal(String sector, double likidite, double cariOran, double nakitOran,
-      double stokDevirHizi, double netKarOran, double alacakDevirHizi){
-    if(sector == 'Yiyecek' && likidite > 1.5 && cariOran > 1.5 && nakitOran > 1.5 && stokDevirHizi > 5
-        && alacakDevirHizi> 5){
-      setState(() {
-        advice = "Yiyecek sektöründe oranlarınızın oldukça iyi olduğunu göstermektedir";
-      });
-    }
+  // void createAdviceForMeal(String sector, double likidite, double cariOran, double nakitOran,
+  //     double stokDevirHizi, double netKarOran, double alacakDevirHizi){
+  //   if(sector == 'Yiyecek' && likidite > 1.5 && cariOran > 1.5 && nakitOran > 1.5 && stokDevirHizi > 5
+  //       && alacakDevirHizi> 5){
+  //     setState(() {
+  //       advice = "Yiyecek sektöründe oranlarınızın oldukça iyi olduğunu göstermektedir";
+  //     });
+  //   }
     //else if'ler yazılacak olası kosullar
-    else{
-      setState(() {
-        advice = "Oranlarınızdan ..."
-            " değerleri oldukça düşük olup,"
-            " iyileştirmek için ... çalışmalar sektörünüz doğrultusunda yapılabilir";
-      });
-    }
-  }
+  //   else{
+  //     setState(() {
+  //       advice = "Oranlarınızdan ..."
+  //           " değerleri oldukça düşük olup,"
+  //           " iyileştirmek için ... çalışmalar sektörünüz doğrultusunda yapılabilir";
+  //     });
+  //   }
+  // }
   // late Values values;
 
   // late LikiditeOranlari likiditeOranlari;

@@ -1,4 +1,4 @@
-import 'package:busi/firebase_options.dart';
+import 'package:busi/firebase/firebase_options.dart';
 import 'package:busi/views/page_view.dart';
 import 'package:busi/widget/bottom_navigation_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
