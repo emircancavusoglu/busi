@@ -14,8 +14,8 @@ class Advices extends StatefulWidget {
 }
 
 class _AdvicesState extends State<Advices> {
-  late String sector;
-  late String advice = '';
+  String sector = "";
+   String advice = '';
 
   double? likidite;
   double? cariOran;
@@ -32,38 +32,39 @@ class _AdvicesState extends State<Advices> {
     sector = sector;
     fetchSectorFromFirebase();
     fetchResultsFromFirebase().then((_) {
-      decideBySectorAndResults();
+      // decideBySectorAndResults();
     });
   }
 
-  void decideBySectorAndResults() {
-    if (cariOran != null && cariOran! == 1.2 && sector == 'Yiyecek') {
-      if (mounted) {
-        setState(() {
-          advice = 'Artan likidite ihtiyacına yönelik önlemler alınmalıdır, '
-              'örneğin alacakların tahsilat süreci iyileştirilmeli ya da stok yönetimi revize edilmelidir.';
-        });
-      }
-    }
-    if (sector == 'Yiyecek' && alacakDevirHizi != null &&
-        stokDevirHizi != null && aktifDevirHizi != null &&
-        alacakDevirHizi! < 9 && stokDevirHizi! < 10 &&
-        aktifDevirHizi! < 2) {
-      if (mounted) {
-        setState(() {
-          advice = 'Alacak tahsilat süreçleri iyileştirilmeli, likidite sorunları önlenmelidir. '
-              'Varlıkların etkin kullanımı için işletme faaliyetleri optimize edilmeli ve verimlilik artırılmalıdır. '
-              'Stok yönetimi revize edilmeli ve stok devir hızı artırılmalıdır, aksi halde stok maliyetleri artabilir.';
-        });
-      }
-    } else {
-      if (mounted) {
-        setState(() {
-          advice = 'Durumunuz oldukça iyi görünüyor';
-        });
-      }
-    }
-  }
+  // void decideBySectorAndResults() {
+  //   if (cariOran != null && cariOran! == 1.2 && sector == 'Yiyecek') {
+  //     if (mounted) {
+  //       setState(() {
+  //         advice = 'Artan likidite ihtiyacına yönelik önlemler alınmalıdır, '
+  //             'örneğin alacakların tahsilat süreci iyileştirilmeli ya da stok '
+  //             'yönetimi revize edilmelidir.';
+  //       });
+  //     }
+  //   }
+  //   if (sector == 'Yiyecek' && alacakDevirHizi != null &&
+  //       stokDevirHizi != null && aktifDevirHizi != null &&
+  //       alacakDevirHizi! < 9 && stokDevirHizi! < 10 &&
+  //       aktifDevirHizi! < 2) {
+  //     if (mounted) {
+  //       setState(() {
+  //         advice = 'Alacak tahsilat süreçleri iyileştirilmeli, likidite sorunları önlenmelidir. '
+  //             'Varlıkların etkin kullanımı için işletme faaliyetleri optimize edilmeli ve verimlilik artırılmalıdır. '
+  //             'Stok yönetimi revize edilmeli ve stok devir hızı artırılmalıdır, aksi halde stok maliyetleri artabilir.';
+  //       });
+  //     }
+  //   } else {
+  //     if (mounted) {
+  //       setState(() {
+  //         advice = 'Durumunuz oldukça iyi görünüyor';
+  //       });
+  //     }
+  //   }
+  // }
 
   Future<void> fetchSectorFromFirebase() async {
     var userDoc = await FirebaseFirestore.instance
@@ -107,13 +108,14 @@ class _AdvicesState extends State<Advices> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (sector == 'Konaklama') ...[
-              const Text('Konaklama sektörü için tavsiyeler:'),
+            if (sector == 'Konaklama' && likidite! > 1.5) ...[
               Text(advice),
-            ] else if (sector == 'Yiyecek') ...[
-              const Text('Yiyecek sektörü için tavsiyeler:'),
-              Text(advice),
-            ],
+            ] else if (sector == 'Yiyecek' && likidite! > 1.5) ...[
+              const Text(AdvicesStructure.highResultsFood),
+            ]
+            else if (sector == 'Yiyecek' && likidite! < 1.5)...[
+              const Text(AdvicesStructure.lowResultsFood)
+    ]
           ],
         ),
       ),
@@ -121,4 +123,12 @@ class _AdvicesState extends State<Advices> {
   }
 
   IconThemeData buildIconThemeData() => const IconThemeData(color: Colors.white);
+}
+class AdvicesStructure{
+  static const String highResultsFood = "Değerleriniz oldukça yüksektir";
+  static const String lowResultsFood = "Değerleriniz oldukça yüksektir";
+  static const String highResultsAccomadation = "Yemek sektörüne göre "
+      "değerleriniz oldukça yüksektir";
+  static const String lowResultsAccomadation = "Konaklama sektörüne göre değerleriniz"
+      " oldukça düşüktir";
 }
