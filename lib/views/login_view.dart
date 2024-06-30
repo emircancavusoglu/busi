@@ -6,7 +6,6 @@ import '../consts/navigator.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({super.key});
-  final String username = 'userDeneme';
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +13,10 @@ class LoginView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white70,
-        title: Text('Welcome To BusiCount $username'),
+        title: const Text('Welcome To BusiCount'),
       ),
       body: Center(
-        child: Column( // Use Column for vertical layout
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center, // Center widgets vertically
           children: [
             ElevatedButton(
@@ -46,7 +45,7 @@ class LoginView extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Image.asset(
-                    assetGoogle(), // Replace with your Google icon asset function
+                    assetGoogle(),
                     height: 24,
                     width: 24,
                   ),
@@ -66,7 +65,7 @@ class LoginView extends StatelessWidget {
               onPressed: () {
                 NavigateToWidget.navigateToScreen(context, const MainPageView());
               },
-              child: const Text('geçici buton'),
+              child: const Text(''),
             ),
           ],
         ),

@@ -5,27 +5,9 @@ class Advices extends StatefulWidget {
   const Advices({
     required this.sector,
     super.key,
-    this.likidite,
-    this.cariOran,
-    this.netKarOran,
-    this.stokDevirHizi,
-    this.alacakDevirHizi,
-    this.aktifDevirHizi,
-    this.faaliyetKariOrani,
-    this.brutKarOrani,
-    this.netKarOrani,
   });
 
   final String sector;
-  final double? likidite;
-  final double? cariOran;
-  final double? netKarOran;
-  final double? stokDevirHizi;
-  final double? alacakDevirHizi;
-  final double? aktifDevirHizi;
-  final double? faaliyetKariOrani;
-  final double? brutKarOrani;
-  final double? netKarOrani;
 
   @override
   State<Advices> createState() => _AdvicesState();
@@ -33,18 +15,29 @@ class Advices extends StatefulWidget {
 
 class _AdvicesState extends State<Advices> {
   late String sector;
-  late String advice = "";
+  late String advice = '';
+
+  double? likidite;
+  double? cariOran;
+  double? netKarOran;
+  double? stokDevirHizi;
+  double? alacakDevirHizi;
+  double? aktifDevirHizi;
+  double? faaliyetKariOrani;
+  double? brutKarOrani;
 
   @override
   void initState() {
     super.initState();
-    sector = widget.sector;
+    sector = sector;
     fetchSectorFromFirebase();
-    decideBySectorAndResults();
+    fetchResultsFromFirebase().then((_) {
+      decideBySectorAndResults();
+    });
   }
 
   void decideBySectorAndResults() {
-    if (widget.cariOran != null && widget.cariOran! < 1.2 && widget.sector == 'Yiyecek') {
+    if (cariOran != null && cariOran! == 1.2 && sector == 'Yiyecek') {
       if (mounted) {
         setState(() {
           advice = 'Artan likidite ihtiyacına yönelik önlemler alınmalıdır, '
@@ -52,10 +45,10 @@ class _AdvicesState extends State<Advices> {
         });
       }
     }
-    if (widget.sector == 'Yiyecek' && widget.alacakDevirHizi != null && widget.stokDevirHizi != null && widget.aktifDevirHizi != null &&
-        widget.alacakDevirHizi! < 9 &&
-        widget.stokDevirHizi! < 10 &&
-        widget.aktifDevirHizi! < 2) {
+    if (sector == 'Yiyecek' && alacakDevirHizi != null &&
+        stokDevirHizi != null && aktifDevirHizi != null &&
+        alacakDevirHizi! < 9 && stokDevirHizi! < 10 &&
+        aktifDevirHizi! < 2) {
       if (mounted) {
         setState(() {
           advice = 'Alacak tahsilat süreçleri iyileştirilmeli, likidite sorunları önlenmelidir. '
@@ -66,7 +59,7 @@ class _AdvicesState extends State<Advices> {
     } else {
       if (mounted) {
         setState(() {
-          advice = "Durumunuz oldukça iyi görünüyor";
+          advice = 'Durumunuz oldukça iyi görünüyor';
         });
       }
     }
@@ -84,14 +77,33 @@ class _AdvicesState extends State<Advices> {
     }
   }
 
+  Future<void> fetchResultsFromFirebase() async {
+    var userResults = await FirebaseFirestore.instance
+        .collection('bilanco')
+        .doc('fHlFzgU70mt61wbAk8m2')
+        .get();
+    if (mounted) {
+      setState(() {
+        likidite = userResults['Likidite'] as double?;
+        cariOran = userResults['Cari Oran'] as double?;
+        netKarOran = userResults['Net Kar Oran'] as double?;
+        stokDevirHizi = userResults['Stok Devir Hızı'] as double?;
+        alacakDevirHizi = userResults['Alacak Devir Hızı'] as double?;
+        aktifDevirHizi = userResults['Aktif Devir Hızı'] as double?;
+        faaliyetKariOrani = userResults['Faaliyet Kar Oranı'] as double?;
+        brutKarOrani = userResults['Brüt Kar Oranı'] as double?;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.sector} Sektörü için Tavsiyeler'),
+        title: Text('$sector Sektörü için Tavsiyeler'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -102,7 +114,6 @@ class _AdvicesState extends State<Advices> {
               const Text('Yiyecek sektörü için tavsiyeler:'),
               Text(advice),
             ],
-            // Diğer sektörler için ek durumlar ekleyebilirsiniz
           ],
         ),
       ),
@@ -111,47 +122,3 @@ class _AdvicesState extends State<Advices> {
 
   IconThemeData buildIconThemeData() => const IconThemeData(color: Colors.white);
 }
-
-// class AccommodationView extends StatefulWidget {
-//   const AccommodationView({super.key});
-//
-//   @override
-//   State<AccommodationView> createState() => _AccommodationViewState();
-// }
-//
-// class _AccommodationViewState extends State<AccommodationView> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Konaklama Sektörü için Tavsiyeler'),
-//       ),
-//       body: const Center(
-//         child: Text('Tavsiyeler burada olacak'),
-//       ),
-//     );
-//   }
-// }
-//
-// class FoodSector extends StatefulWidget {
-//   const FoodSector({Key? key}) : super(key: key);
-//
-//   @override
-//   State<FoodSector> createState() => _FoodSectorState();
-// }
-//
-// class _FoodSectorState extends State<FoodSector> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Şirketinize Özgü Tavsiyeler'),
-//       ),
-//       body: Column(
-//         children: [
-//           Text("Yiyecek sektöründe, pazar hacmi .. seviyeye ulaşmıştır."),
-//         ],
-//       ),
-//     );
-//   }
-// }

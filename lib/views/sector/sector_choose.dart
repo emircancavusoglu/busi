@@ -11,7 +11,6 @@ class SectorChoose extends StatefulWidget {
 }
 
 class _SectorChooseState extends State<SectorChoose> {
-  final String giyimPerakende = "Giyim Perakendeciliği";
   final String konaklama = "Konaklama";
   final String yiyecek = "Yiyecek";
 
@@ -50,9 +49,8 @@ class _SectorChooseState extends State<SectorChoose> {
           'sector': sector,
           'timestamp': FieldValue.serverTimestamp(), // Kayıt zamanı
         });
-
-        // Firestore'a başarıyla eklendiğinde başarı sayfasına yönlendirme yap
-        if (mounted) { // State'in hala aktif olup olmadığını kontrol edin
+        // Firestore'a başarıyla eklendiğinde başarı sayfasına yönlendirme
+        if (mounted) { // State'in hala aktif olup olmadığı
           await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const RatioAnalysis()),

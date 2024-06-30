@@ -1,4 +1,5 @@
 import 'package:busi/calculations/ratio_calculations.dart';
+import 'package:busi/prototype/ratio_analysis_results_prototype.dart';
 import 'package:busi/widget/alertDialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -41,73 +42,58 @@ class _ShowRatioResultsState extends State<ShowRatioResults> {
       alertDialog(context, 'Hata', 'Veriler kaydedilirken bir hata oluştu $e');
     }
   }
-  // void createAdviceForMeal(String sector, double likidite, double cariOran, double nakitOran,
-  //     double stokDevirHizi, double netKarOran, double alacakDevirHizi){
-  //   if(sector == 'Yiyecek' && likidite > 1.5 && cariOran > 1.5 && nakitOran > 1.5 && stokDevirHizi > 5
-  //       && alacakDevirHizi> 5){
-  //     setState(() {
-  //       advice = "Yiyecek sektöründe oranlarınızın oldukça iyi olduğunu göstermektedir";
-  //     });
-  //   }
-    //else if'ler yazılacak olası kosullar
-  //   else{
-  //     setState(() {
-  //       advice = "Oranlarınızdan ..."
-  //           " değerleri oldukça düşük olup,"
-  //           " iyileştirmek için ... çalışmalar sektörünüz doğrultusunda yapılabilir";
-  //     });
-  //   }
-  // }
-  // late Values values;
-
-  // late LikiditeOranlari likiditeOranlari;
-  // late KarlilikOranlari karlilikOranlari;
-  // late double? donenVarliklar;
-  // late double? duranVarliklar;
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // Eğer widget.value null değilse values ve likiditeOranlari başlatılır
-  //   if(widget.value != null) {
-  //     // values = Values(data: widget.value);
-  //     likiditeOranlari = LikiditeOranlari();
-  //     // donenVarliklar ve duranVarliklar değişkenlerine verileri atayalım
-  //     donenVarliklar = likiditeOranlari.donenVarliklar;
-  //     duranVarliklar = likiditeOranlari.duranVarliklar;
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Oran analizi sonuçları'),
+        backgroundColor: Colors.transparent,
+        centerTitle: true,
+        flexibleSpace: const FlexibleWdiget(),
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text('Oran analizi sonuçları',style: TextStyle(
+            color: Colors.white,),),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 10),
-        child: Column(
-          children: [
-            Text('Duran / Dönen : ${widget.likidite?.toStringAsFixed(2)} ',style: const
-            TextStyle(fontSize: 22),),
-            Text( 'Cari Oran : ${widget.cariOran?.toStringAsFixed(2)}',style:
-            const TextStyle(fontSize: 22),) ,
-            Text( 'Net Kar Oran : ${widget.netKarOran?.toStringAsFixed(2)}',style:
-              const TextStyle(fontSize: 22),) ,
-            Text( 'Stok Devir Hızı : ${widget.stokDevirHizi?.toStringAsFixed(2)}',style:
-              const TextStyle(fontSize: 22),) ,
-            Text( 'Alacak Devir Hızı : ${widget.alacakDevirHizi?.toStringAsFixed(2)}',style:
-              const TextStyle(fontSize: 22),) ,
-            Text( 'Brüt kar Oranı : ${widget.alacakDevirHizi?.toStringAsFixed(2)}',style:
-              const TextStyle(fontSize: 22),) ,
-            Text( 'Faaliyet Karı Oranı : ${widget.alacakDevirHizi?.toStringAsFixed(2)}',style:
-              const TextStyle(fontSize: 22),) ,
-            Text( 'Kaldıraç Oranı : ${widget.alacakDevirHizi?.toStringAsFixed(2)}',style:
-              const TextStyle(fontSize: 22),) ,
-            Text( 'Nakit Oranı : ${widget.alacakDevirHizi?.toStringAsFixed(2)}',style:
-              const TextStyle(fontSize: 22),) ,
-
-          ],
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.blue, Colors.blueAccent],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 10),
+              const Text('Likidite Oranları',style: TextStyle(color: Colors.white,fontSize: 22),),
+              const SizedBox(height: 5),
+              Text('Duran / Dönen : ${widget.likidite?.toStringAsFixed(2)} ',style: const
+              TextStyle(fontSize: 18,color: Colors.white),),
+              Text( 'Cari Oran : ${widget.cariOran?.toStringAsFixed(2)}',style:
+              const TextStyle(fontSize: 18, color: Colors.white),) ,
+              Text( 'Nakit Oranı : ${widget.alacakDevirHizi?.toStringAsFixed(2)}',
+                style: const TextStyle(fontSize: 18, color: Colors.white),) ,
+              const SizedBox(height: 10),
+              const Text('Faaliyet Oranları',style: TextStyle(color: Colors.white,fontSize: 22),),
+              const SizedBox(height: 5,),
+              Text( 'Stok Devir Hızı : ${widget.stokDevirHizi?.toStringAsFixed(2)}',style:
+                const TextStyle(fontSize: 18, color: Colors.white),) ,
+              Text( 'Alacak Devir Hızı : ${widget.alacakDevirHizi?.toStringAsFixed(2)}',style:
+                const TextStyle(fontSize: 18, color: Colors.white),) ,
+              const SizedBox(height: 10),
+              Text( 'Brüt kar Oranı : ${widget.alacakDevirHizi?.toStringAsFixed(2)}',style:
+                const TextStyle(fontSize: 18, color: Colors.white),) ,
+              Text( 'Faaliyet Karı Oranı : ${widget.alacakDevirHizi?.toStringAsFixed(2)}',style:
+                const TextStyle(fontSize: 18, color: Colors.white),) ,
+              Text( 'Kaldıraç Oranı : ${widget.alacakDevirHizi?.toStringAsFixed(2)}',style:
+                const TextStyle(fontSize: 18, color: Colors.white),) ,
+              Text( 'Net Kar Oranı : ${widget.netKarOran?.toStringAsFixed(2)}',style:
+              const TextStyle(fontSize: 18, color: Colors.white),) ,
+            ],
+          ),
         ),
       ),
     floatingActionButton: FloatingActionButton(
