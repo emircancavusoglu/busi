@@ -78,17 +78,21 @@ class _AdvicesState extends State<Advices> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (sector == 'Konaklama' && likidite != null && likidite! > 2.5) ...[
-              Text(advice),
-            ] else if (sector == 'Yiyecek' && likidite != null && likidite! > 2.5) ...[
-              const Text(AdvicesStructure.highLiquidtyResultsFood),
-            ] else if (sector == 'Yiyecek' && alacakDevirHizi != null && stokDevirHizi != null && aktifDevirHizi != null &&
+            if (sector == 'Konaklama' && likidite != null && likidite! > 1.5 &&
+                cariOran != null && cariOran! > 1.5) ...[
+              const Text(AdvicesStructure.highResultsAccomadation),
+            ],
+            if (sector == 'Yiyecek' && likidite != null && likidite! > 1.5) ...[
+              const Text("deneme"),
+            ],
+            if (sector == 'Yiyecek' && alacakDevirHizi != null && stokDevirHizi != null && aktifDevirHizi != null &&
                 alacakDevirHizi! < 9 && stokDevirHizi! < 10 && aktifDevirHizi! < 2) ...[
-              const Text(AdvicesStructure.lowBorrowingResultsFood)
-            ] else if (sector == 'Yiyecek' && likidite != null && likidite! < 1.5 && cariOran != null && cariOran! < 1.2) ...[
+              const Text(AdvicesStructure.lowTurnOverResultsFood)
+            ],
+            if (sector == 'Yiyecek' && likidite != null && likidite! < 1.5 && cariOran != null && cariOran! < 1.2) ...[
               const Text(AdvicesStructure.lowLiquitdyResultsFood)
             ] else ...[
-              Text('Değerleriniz normal.'),
+              const Text('Değerleriniz normal.'),
             ],
           ],
         ),

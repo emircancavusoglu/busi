@@ -27,6 +27,8 @@ class RatioAnalysisState extends State<RatioAnalysis> {
   late double? donemBasiTicariAlacaklar;
   late double? donemSonuTicariAlacaklar;
   late double? satisGelirleri;
+  late double? toplamVarliklar;
+  late double? toplamBorclar;
 
 
   double ortalamaStok = 0;
@@ -36,6 +38,9 @@ class RatioAnalysisState extends State<RatioAnalysis> {
   double stokDevirHizi = 0;
   double ortalamaTicariAlacaklar = 0;
   double alacakDevirHizi = 0;
+  double kaldiracOrani = 0;
+  double faaliyetKariOrani = 0;
+  double brutKarOrani = 0;
 
   Future<void> readExcelFile(File file) async {
     final bytes = await file.readAsBytes();
@@ -62,6 +67,7 @@ class RatioAnalysisState extends State<RatioAnalysis> {
       donemBasiTicariAlacaklar = double.tryParse(allData[5][1]);
       donemSonuTicariAlacaklar = double.tryParse(allData[5][4]);
       satisGelirleri = double.tryParse(allData[74][1]);
+      toplamVarliklar = double.tryParse(allData[30][1]);
       likidite = donenVarliklar!/duranVarliklar!;
       cariOran = donenVarliklar!/ kisaVadeliYukumlulukler!;
       netKarOran = netKar!/netSatislar!;
@@ -110,7 +116,7 @@ class RatioAnalysisState extends State<RatioAnalysis> {
       appBar: AppBar(
         leading: IconButton(onPressed: (){
           Navigator.push(context, MaterialPageRoute(builder: (context) =>
-              AnalysisTypes(),),);
+              const AnalysisTypes(),),);
         },
           icon: const Icon(Icons.chevron_left),),
         title: const Text('Oran Analizinizi Yapın',style: TextStyle(color: Colors.white),),

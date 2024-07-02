@@ -73,13 +73,11 @@ class AnalysisTypes extends StatelessWidget {
         destinationScreen = const RatioAnalysis();
         break;
     }
-
     return Card(
       color: color,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
       ),
-
       margin: const EdgeInsets.all(8), // Kartların arasındaki boşluk
       child: InkWell(
         onTap: () {

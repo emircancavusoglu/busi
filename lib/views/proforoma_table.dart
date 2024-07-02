@@ -2,20 +2,18 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class ProformaTable extends StatelessWidget {
+  ProformaTable({
+    required this.donenVarliklar, required this.duranVarliklar,
+    required this.kisaVadeliYukumlulukler, required this.netSatislar,
+    required this.netKar, required this.finansalBorclar, super.key,
+  });
+
   final double donenVarliklar;
   final double duranVarliklar;
   final double kisaVadeliYukumlulukler;
   final double netSatislar;
   final double netKar;
-
-  ProformaTable({
-    super.key,
-    required this.donenVarliklar,
-    required this.duranVarliklar,
-    required this.kisaVadeliYukumlulukler,
-    required this.netSatislar,
-    required this.netKar,
-  });
+  final double finansalBorclar;
 
   final List<String> yillar = ['Yıl 1', 'Yıl 2', 'Yıl 3', 'Yıl 4', 'Yıl 5'];
   final List<String> varliklar = [
@@ -34,41 +32,38 @@ class ProformaTable extends StatelessWidget {
     'Özkaynaklar',
   ];
 
-  final double varlikBuyumeOrani = 0.10; // %10 büyüme
-  final double borcBuyumeOrani = 0.08;   // %8 büyüme
-  final double ozkaynakBuyumeOrani = 0.12; // %12 büyüme
-
   List<List<double>> formulluVeriUret() {
     final List<List<double>> veriler = [];
     final int yilSayisi = yillar.length;
 
     List<double> donenVarliklarListesi = List.generate(yilSayisi,
-            (index) => donenVarliklar * pow(1 + varlikBuyumeOrani, index));
+            (index) => donenVarliklar * pow(1 + donenVarliklar / 100, index));
     List<double> duranVarliklarListesi = List.generate(yilSayisi,
-            (index) => duranVarliklar * pow(1 + varlikBuyumeOrani, index));
+            (index) => duranVarliklar * pow(1 + duranVarliklar / 100, index));
     List<double> kisaVadeliBorclarListesi = List.generate(yilSayisi,
-            (index) => kisaVadeliYukumlulukler * pow(1 + borcBuyumeOrani, index));
+            (index) => kisaVadeliYukumlulukler * pow
+              (1 + kisaVadeliYukumlulukler /100, index),);
     List<double> ozkaynaklarListesi = List.generate(yilSayisi,
-            (index) => (donenVarliklarListesi[index] + duranVarliklarListesi[index])
-                - kisaVadeliBorclarListesi[index],);
+          (index) => (donenVarliklarListesi[index] + duranVarliklarListesi[index])
+          - kisaVadeliBorclarListesi[index],);
 
     veriler..add(donenVarliklarListesi)
-    ..add(duranVarliklarListesi)
-    ..add(kisaVadeliBorclarListesi)
-    ..add(ozkaynaklarListesi);
+      ..add(duranVarliklarListesi)
+      ..add(kisaVadeliBorclarListesi)
+      ..add(ozkaynaklarListesi);
 
     return veriler;
   }
 
   @override
   Widget build(BuildContext context) {
-    List<List<double>> veriler = formulluVeriUret();
+    final veriler = formulluVeriUret();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Proforma Tablolar'),
         centerTitle: true,
         backgroundColor: Colors.transparent,
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
